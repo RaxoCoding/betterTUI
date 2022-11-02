@@ -49,7 +49,7 @@ class Form:
             if (self.pos < len(self.inputs) - 1):
                 childArgs += ("KEY_DOWN", )
             
-            childArgs += ("\n", )
+            childArgs += ("\n", "KEY_ENTER", )
 
             key_str = self.inputs[self.pos].on(*childArgs)
             if key_str in args:

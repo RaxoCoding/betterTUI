@@ -31,7 +31,7 @@ class Input:
 
     def on(self, *args) -> int:
         if(len(args) == 0):
-            args = "\n"
+            args = ("\n", "KEY_ENTER")
 
         self.screen.addstr(self.y-1, self.x, self.label, curses.A_REVERSE)
         self.screen.move(self.y+1, self.x+2+self.pos)
@@ -71,7 +71,7 @@ class Input:
         combined_pos = (self.show_content_pos - len_show_content) + 1 + pos
         input_length = self.width-3
 
-        if(key_str  == "\b"):
+        if(key_str in ["\b", "KEY_BACKSPACE"]):
             # if smaller & at end
             if(len_show_content == len_content and pos == len_show_content):
                 self.content = self.content[:-1]

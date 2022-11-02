@@ -22,7 +22,7 @@ class Select:
 
     def on(self, *args) -> int:
         if(len(args) == 0):
-            args = "\n"
+            args = ("\n", "KEY_ENTER")
 
         self.screen.addstr(self.y, self.x, self.label, curses.A_REVERSE)
 
@@ -34,7 +34,7 @@ class Select:
             self.screen.addstr(self.y, self.x+len(self.label), self.content)
 
             if key_str in args: 
-                if not(key_str == "KEY_UP" or key_str == "KEY_DOWN" or key_str == "KEY_LEFT" or key_str == "KEY_RIGHT" or key_str == "\n"):
+                if not(key_str == "KEY_UP" or key_str == "KEY_DOWN" or key_str == "KEY_LEFT" or key_str == "KEY_RIGHT" or key_str in ["\n", "KEY_BACKSPACE"]):
                     self.screen.addstr(self.y, self.x+len(self.label), self.content)
                     return key_str
                 elif(key_str == "\n" and self.pos == 0):
@@ -87,7 +87,7 @@ class Select:
     def handle_key(self, key_str):
         pos = self.pos
 
-        if(key_str == "\n"):
+        if(key_str in ["\n", "KEY_BACKSPACE"]):
             self.content = self.options[pos-1]
             self.pos = 0
 
