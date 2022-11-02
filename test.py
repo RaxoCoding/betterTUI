@@ -1,9 +1,8 @@
 from easyTUI import *
 
 def home(screen):
-    button = Button(screen, 30, 5, "ENTER VAULT")
-    Text(screen, 20, 8, "ENETER AT YOUR OWN RISK")
-
+    line = Line(screen, 5, 0, "|", 0, True)
+    button = Button(screen, 4, 2, "ENTER VAULT")
     wrapper = Wrapper(screen, [0, 0], [(button, vault)])
     wrapper.on("q", "Q")
 
@@ -12,14 +11,16 @@ def vault(wrapper, child_obj):
     screen.clear()
     wrapper.delete()
 
-    search_bar = SearchBar(screen, 30, 5, 30, "Withdraw Amount:", "Enter")
-    Box(screen, 30, 8, 30, 5)
-    Text(screen, 45, 10, "100000$")
+    input = Input(screen, 2, 2, 30, "Login: ")
+    select = Select(screen, 2, 2, "Profession: ", ["Student", "Teacher", "News"])
+    counter = Counter(screen, 2, 2, 0, 100, "Age: ")
+    form = Form(screen, 4, 2, "Login", [input, select, counter])
 
-    wrapper = Wrapper(screen, [0, 0], [(search_bar, withdraw)])
+    wrapper = Wrapper(screen, [0, 0], [(form, withdraw)])
     wrapper.on("q", "Q")
 
 def withdraw(wrapper, child_obj):
+    print(child_obj.content)
     screen = wrapper.screen
     screen.clear()
     wrapper.delete()
@@ -27,10 +28,9 @@ def withdraw(wrapper, child_obj):
 
 def main():
     screen = Screen()
-    screen.box()
 
     home(screen)
-
+    
     screen.close()
 
 main()
