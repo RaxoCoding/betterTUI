@@ -8,6 +8,7 @@ class Button:
         self.x = x
         self.y = y
         self.width = len(label) +1
+        self.height = 3
         self.label = label
         self.parent = None
 
@@ -28,7 +29,7 @@ class Button:
         if(len(args) == 0):
             args = "KEY_ENTER"
             
-        self.screen.addstr(self.y+1, self.x+1, self.label, curses.A_STANDOUT)
+        self.screen.addstr(self.y+1, self.x+1, self.label, curses.A_REVERSE)
 
         while(True):
             key_str = self.screen.getkey()
@@ -38,6 +39,32 @@ class Button:
                 return key_str
 
             self.screen.refresh()
+
+    def move(self, x ,y):
+        for i in range(0, self.width+1):
+            self.screen.addstr(self.y, self.x+i, " ")
+            self.screen.addstr(self.y+2, self.x+i, " ")
+
+        self.screen.addstr(self.y+1, self.x, " ")
+        self.screen.addstr(self.y+1, self.x+self.width, " ")
+
+        self.screen.addstr(self.y+1, self.x+1, " "*len(self.label))
+
+        for i in range(0, self.width+1):
+            self.screen.addstr(y, x+i, "─")
+            self.screen.addstr(y+2, x+i, "─")
+
+        self.screen.addstr(y, x, "┌")
+        self.screen.addstr(y, x+self.width, "┐")
+        self.screen.addstr(y+1, x, "│")
+        self.screen.addstr(y+1, x+self.width, "│")
+        self.screen.addstr(y+2, x, "└")
+        self.screen.addstr(y+2, x+self.width, "┘")
+
+        self.screen.addstr(y+1, x+1, self.label)
+
+        self.x = x
+        self.y = y
 
     def delete(self):
         for i in range(0, self.width+1):

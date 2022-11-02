@@ -122,7 +122,36 @@ input = Input(screen, 5, 2, 30, "Input:")
 # on: (*args: Any) -> int
 # args are the key_codes that when pressed, exit the input and return the key_code
 # if you provide no exit keys ENTER key will be the default exit
-exit_key = input.on(key_codes().KEY_UP, key_codes().KEY_DOWN)
+exit_key = input.on("KEY_UP", "KEY_DOWN")
+```
+
+##### Properties
+
+* *content* - the string currently saved in the Input
+
+### Counter(screen: Screen, x: int, y: int, min: int, max: int, label: str, *args: Any)
+
+##### Arguments
+
+* *screen* - Screen() Object
+* *x* - where Counter will start on x-axis
+* *y* - where Counter will start on y-axis
+* *min* - min number possible
+* *max* - max number possible
+* *label* - text for the Counter label
+* **args* - curses character cell attributes
+
+##### Methods
+
+```py
+# initialize Counter object
+counter = Counter(screen, 5, 2, -5, 15, "Counter: ")
+
+# turn counter on and recieve exit_key whenever counter is done
+# on: (*args: Any) -> int
+# args are the key_codes that when pressed, exit the counter and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = counter.on("KEY_UP", "KEY_DOWN")
 ```
 
 ##### Properties
@@ -149,8 +178,36 @@ button = Button(screen, 5, 2, "Click Me!")
 # on: (*args: Any) -> int
 # args are the key_codes that when pressed, exit the button and return the key_code
 # if you provide no exit keys ENTER key will be the default exit
-exit_key = button.on(key_codes().KEY_UP, key_codes().KEY_DOWN)
+exit_key = button.on("KEY_UP", "KEY_DOWN")
 ```
+
+### Select(screen: Screen, x: int, y: int, label: str, options: list, *args: Any)
+
+##### Arguments
+
+* *screen* - Screen() Object
+* *x* - where Select will start on x-axis
+* *y* - where Select will start on y-axis
+* *label* - text for the Select label
+* *options* - options that can be selected
+* **args* - curses character cell attributes
+
+##### Methods
+
+```py
+# initialize Select object
+select = Select(screen, 5, 2, "Options: ", ["Option 1", "Option 2", "Option 3"])
+
+# turn select on and recieve exit_key whenever select is exited
+# on: (*args: Any) -> int
+# args are the key_codes that when pressed, exit the select and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = select.on("KEY_UP", "KEY_DOWN")
+```
+
+##### Properties
+
+* *content* - the currently selected options
 
 ## Complex Widgets
 
@@ -176,9 +233,42 @@ search_bar = SearchBar(screen, 5, 2, 20, "Search: ", "Enter")
 # on: (*args: Any) -> int
 # args are the key_codes that when pressed, exit the search_bar and return the key_code
 # if you provide no exit keys ENTER key will be the default exit
-exit_key = search_bar.on(key_codes().KEY_LEFT, key_codes().KEY_RIGHT)
+exit_key = search_bar.on("KEY_LEFT", "KEY_RIGHT")
 ```
 
 ##### Properties
 
 * *content* - the string currently saved in the SearchBar
+
+### Form(screen: Screen, x: int, y: int, button_label: str, inputs: list, *args: Any)
+
+##### Arguments
+
+* *screen* - Screen() Object
+* *x* - where SearchBar will start on x-axis
+* *y* - where SearchBar will start on y-axis
+* *button_label* - text for the submit Button label
+* *inputs* - list of the widgets to use in the Form (must have the "on" method)
+* **args* - curses character cell attributes
+
+##### Methods
+
+```py
+# x and y of these objects don't matter, it will be moved
+input_1 = Input(screen, 2, 2, 30, "Login: ")
+input_2 = Input(screen, 2, 2, 30, "Password: ")
+counter = Counter(screen, 2, 2, 0, 100, "Age: ")
+
+# initialize Form object
+form = Form(screen, 4, 2, "Login", [input_1, input_2, counter])
+
+# turn form on and recieve exit_key whenever form is exited
+# on: (*args: Any) -> int
+# args are the key_codes that when pressed, exit the form and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = form.on("KEY_LEFT", "KEY_RIGHT")
+```
+
+##### Properties
+
+* *content* - list of the input(s) content(s) in order

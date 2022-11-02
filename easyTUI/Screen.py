@@ -1,4 +1,5 @@
 import curses
+from turtle import screensize
 
 class Screen:
     def __init__(self):
@@ -6,7 +7,11 @@ class Screen:
         curses.noecho()
         curses.cbreak()
         curses.curs_set(0)
-        self.screen.keypad(True)        
+        self.screen.keypad(True)     
+
+    def center(self):
+        max_y, max_x = self.screen.getmaxyx()
+        return (int(max_x/2), int(max_y/2))
 
     def close(self):
         curses.nocbreak()
