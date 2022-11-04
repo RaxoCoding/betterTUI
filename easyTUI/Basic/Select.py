@@ -4,14 +4,14 @@ from easyTUI.Screen import Screen
 from easyTUI.Basic import Box, Text
 
 class Select:
-    def __init__(self, screen: Screen, x: int, y: int, label: str, options: list, *args):
+    def __init__(self, screen: Screen, x: int, y: int, label: str, options: list, content="", *args):
         self.screen = screen
         self.x = x
         self.y = y
         self.label = label
         self.height = 1
         self.options = options
-        self.content = ""
+        self.content = content
         self.pos = 0
         self.parent = None
         self.box = None
@@ -22,7 +22,7 @@ class Select:
 
     def on(self, *args) -> int:
         if(len(args) == 0):
-            args = ("\n", "KEY_ENTER")
+            args = "\n"
 
         self.screen.addstr(self.y, self.x, self.label, curses.A_REVERSE)
 
@@ -34,7 +34,7 @@ class Select:
             self.screen.addstr(self.y, self.x+len(self.label), self.content)
 
             if key_str in args: 
-                if not(key_str == "KEY_UP" or key_str == "KEY_DOWN" or key_str == "KEY_LEFT" or key_str == "KEY_RIGHT" or key_str in ["\n", "KEY_BACKSPACE"]):
+                if not(key_str == "KEY_UP" or key_str == "KEY_DOWN" or key_str == "KEY_LEFT" or key_str == "KEY_RIGHT" or key_str == "\n"):
                     self.screen.addstr(self.y, self.x+len(self.label), self.content)
                     return key_str
                 elif(key_str == "\n" and self.pos == 0):
@@ -87,7 +87,7 @@ class Select:
     def handle_key(self, key_str):
         pos = self.pos
 
-        if(key_str in ["\n", "KEY_BACKSPACE"]):
+        if(key_str == "\n"):
             self.content = self.options[pos-1]
             self.pos = 0
 

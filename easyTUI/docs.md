@@ -101,7 +101,7 @@ exit_key = wrapper.on("q", "Q")
 * *height* - height of the Box
 * **args* - curses character cell attributes
 
-### Input(screen: Screen, x: int, y: int, width: int, label: str, *args: Any)
+### Input(screen: Screen, x: int, y: int, width: int, label: str, content: str = "", *args: Any)
 
 ##### Arguments
 
@@ -110,6 +110,7 @@ exit_key = wrapper.on("q", "Q")
 * *y* - where Input will start on y-axis
 * *width* - width of the Input
 * *label* - text for the Input label
+* *content* - default Input content
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -129,7 +130,7 @@ exit_key = input.on("KEY_UP", "KEY_DOWN")
 
 * *content* - the string currently saved in the Input
 
-### Counter(screen: Screen, x: int, y: int, min: int, max: int, label: str, *args: Any)
+### Counter(screen: Screen, x: int, y: int, min: int, max: int, label: str, content: str = "", *args: Any)
 
 ##### Arguments
 
@@ -139,6 +140,7 @@ exit_key = input.on("KEY_UP", "KEY_DOWN")
 * *min* - min number possible
 * *max* - max number possible
 * *label* - text for the Counter label
+* *content* - default Counter content
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -181,7 +183,7 @@ button = Button(screen, 5, 2, "Click Me!")
 exit_key = button.on("KEY_UP", "KEY_DOWN")
 ```
 
-### Select(screen: Screen, x: int, y: int, label: str, options: list, *args: Any)
+### Select(screen: Screen, x: int, y: int, label: str, options: list, content: str = "", *args: Any)
 
 ##### Arguments
 
@@ -190,6 +192,7 @@ exit_key = button.on("KEY_UP", "KEY_DOWN")
 * *y* - where Select will start on y-axis
 * *label* - text for the Select label
 * *options* - options that can be selected
+* *content* - default Selected option
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -240,7 +243,7 @@ exit_key = search_bar.on("KEY_LEFT", "KEY_RIGHT")
 
 * *content* - the string currently saved in the SearchBar
 
-### Form(screen: Screen, x: int, y: int, button_label: str, inputs: list, *args: Any)
+### Form(screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data: dict, *args: Any)
 
 ##### Arguments
 
@@ -248,7 +251,8 @@ exit_key = search_bar.on("KEY_LEFT", "KEY_RIGHT")
 * *x* - where SearchBar will start on x-axis
 * *y* - where SearchBar will start on y-axis
 * *button_label* - text for the submit Button label
-* *inputs* - list of the widgets to use in the Form (must have the "on" method)
+* *inputs* - dict of the widgets to use in the Form and their keys (must have the "on" method)
+* *extra_data* - dict of data and keys to pass after form is submitted ( think of it as a hidden input in HTML )
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -260,7 +264,7 @@ input_2 = Input(screen, 2, 2, 30, "Password: ")
 counter = Counter(screen, 2, 2, 0, 100, "Age: ")
 
 # initialize Form object
-form = Form(screen, 4, 2, "Login", [input_1, input_2, counter])
+form = Form(screen, 4, 2, "Login", {'login': input_1, 'password': input_2, 'age': counter})
 
 # turn form on and recieve exit_key whenever form is exited
 # on: (*args: Any) -> int

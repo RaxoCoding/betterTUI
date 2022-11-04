@@ -48,7 +48,7 @@ class Wrapper:
         pos = self.pos
 
         if(key_str == "\n"):
-            self.matrix[self.pos[0]][self.pos[1]][1](self, self.matrix[self.pos[0]][self.pos[1]][0])
+            return self.matrix[self.pos[0]][self.pos[1]]
 
         elif(key_str == "KEY_UP"):
             if not (pos[0] == 0):
