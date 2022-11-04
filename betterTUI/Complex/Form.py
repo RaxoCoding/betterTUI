@@ -91,7 +91,7 @@ class Form:
 
 
     def delete(self):
-        for input in self.inputs:
+        for input in self.inputs.values():
             input.delete()
 
         del self
