@@ -3,7 +3,7 @@ import curses
 from easyTUI.Screen import Screen
 
 class Counter:
-    def __init__(self, screen: Screen, x: int, y: int, min: int, max:int, label: str, *args):
+    def __init__(self, screen: Screen, x: int, y: int, min: int, max:int, label: str, content="0", *args):
         self.screen = screen
         self.x = x
         self.y = y
@@ -11,7 +11,7 @@ class Counter:
         self.min = min
         self.max = max
         self.label = label
-        self.content = str(0)
+        self.content = content
         self.pos = 0
         self.parent = None
 
