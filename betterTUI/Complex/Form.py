@@ -4,7 +4,7 @@ from betterTUI.Screen import Screen
 from betterTUI.Basic import Input, Counter, Box, Button
 
 class Form:
-    def __init__(self, screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data: dict, *args):
+    def __init__(self, screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data={}, *args):
         self.screen = screen
         self.x = x
         self.y = y
