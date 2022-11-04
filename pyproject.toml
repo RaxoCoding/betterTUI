@@ -2,7 +2,7 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
-name = "easyTUI"
+name = "betterTUI"
 version = "0.0.1"
 authors = [
   { name="Oscar Gomez (Raxo)", email="oscargomez.raxo@gmail.com" },

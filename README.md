@@ -1,4 +1,4 @@
-# easyTUI - collection of curses widgets for building TUI's
+# betterTUI - collection of curses widgets for building TUI's
 
 ### Global Methods
 
@@ -276,3 +276,5 @@ exit_key = form.on("KEY_LEFT", "KEY_RIGHT")
 ##### Properties
 
 * *content* - list of the input(s) content(s) in order
+
+cats = gigachad
