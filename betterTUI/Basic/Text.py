@@ -1,6 +1,6 @@
 import curses
 
-from easyTUI.Screen import Screen
+from betterTUI.Screen import Screen
 
 class Text:
     def __init__(self, screen: Screen, x: int, y: int, content: str, *args):

@@ -1,7 +1,7 @@
 import curses
 
-from easyTUI.Screen import Screen
-from easyTUI.Basic import Input, Button
+from betterTUI.Screen import Screen
+from betterTUI.Basic import Input, Button
 
 class SearchBar:
     def __init__(self, screen: Screen, x: int, y: int, width: int, input_label: str, button_label: str, *args):

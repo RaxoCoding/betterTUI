@@ -1,7 +1,7 @@
 import curses
 
-from easyTUI.Screen import Screen
-from easyTUI.Basic import Input, Counter, Box, Button
+from betterTUI.Screen import Screen
+from betterTUI.Basic import Input, Counter, Box, Button
 
 class Form:
     def __init__(self, screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data: dict, *args):

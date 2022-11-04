@@ -1,6 +1,6 @@
 import curses
 
-from easyTUI.Screen import Screen
+from betterTUI.Screen import Screen
 
 class Counter:
     def __init__(self, screen: Screen, x: int, y: int, min: int, max:int, label: str, content="0", *args):

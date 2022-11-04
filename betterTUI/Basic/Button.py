@@ -1,6 +1,6 @@
 import curses
 
-from easyTUI.Screen import Screen
+from betterTUI.Screen import Screen
 
 class Button:
     def __init__(self, screen: Screen, x: int, y: int, label: str, *args):
@@ -27,12 +27,13 @@ class Button:
 
     def on(self, *args) -> int:
         if(len(args) == 0):
-            args = "KEY_ENTER"
+            args = ("\n", "KEY_ENTER")
             
         self.screen.addstr(self.y+1, self.x+1, self.label, curses.A_REVERSE)
 
         while(True):
             key_str = self.screen.getkey()
+
             if key_str in args:
                 self.screen.addstr(self.y+1, self.x+1, self.label)
                 curses.curs_set(0)

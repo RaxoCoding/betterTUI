@@ -31,7 +31,7 @@ screen.box()
 ```
 
 ## Wrapper(screen: Screen, start_pos: list, *args: list)
-the Wrapper object is special it helps you handle all of your widgets, moving between them, and trigerring their corresponding functions.
+the Wrapper object is special it helps you handle all of your widgets, moving between them, and returning their corresponding functions.
 the Wrapper cannot handle normal widgets like "Text" its made to handle interactive objects which can be selected/clicked.
 Wrapper object's can be used to handle switching screens, if you have 1 screen it can handle your whole TUI.
 
@@ -63,7 +63,7 @@ wrapper.insert([0, 2], button, button_func)
 # on: (*args: Any) -> int
 # args are the keys that when pressed, exit the wrapper and return the key
 # if you provide no exit keys ENTER key will be the default exit
-exit_key = wrapper.on("q", "Q")
+exit_func = wrapper.on("q", "Q")
 ```
 
 ## Simple Widgets

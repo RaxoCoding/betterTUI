@@ -1,7 +1,7 @@
 import curses
 
-from easyTUI.Screen import Screen
-from easyTUI.Basic import Box, Text
+from betterTUI.Screen import Screen
+from betterTUI.Basic import Box, Text
 
 class Select:
     def __init__(self, screen: Screen, x: int, y: int, label: str, options: list, content="", *args):

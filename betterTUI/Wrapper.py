@@ -1,6 +1,6 @@
 import curses
 from typing import Any, Callable
-from easyTUI import Screen
+from betterTUI import Screen
 
 class Wrapper:
     def __init__(self, screen: Screen, start_pos: list, *args: list):
@@ -22,7 +22,7 @@ class Wrapper:
             if (self.pos[1] < len(self.matrix[self.pos[0]])-1):
                 childArgs += ("KEY_RIGHT", )
             
-            childArgs += ("\n", )
+            childArgs += ("\n", "KEY_ENTER", )
 
             key_str = self.matrix[self.pos[0]][self.pos[1]][0].on(*childArgs)
 
@@ -38,16 +38,20 @@ class Wrapper:
                 elif(key_str == "KEY_RIGHT" and self.pos[1] == len(self.matrix[self.pos[0]])-1):
                     return key_str
                 else:
-                    self.handle_key(key_str)
+                    res = self.handle_key(key_str)
+                    if(res):
+                        return res
             else:
-                self.handle_key(key_str)
+                res = self.handle_key(key_str)
+                if(res):
+                    return res
 
             self.screen.refresh()
 
     def handle_key(self, key_str):
         pos = self.pos
 
-        if(key_str == "\n"):
+        if(key_str in ("\n", "KEY_ENTER")):
             return self.matrix[self.pos[0]][self.pos[1]]
 
         elif(key_str == "KEY_UP"):
