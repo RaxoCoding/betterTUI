@@ -1,5 +1,4 @@
 import curses
-from turtle import screensize
 
 class Screen:
     def __init__(self):
