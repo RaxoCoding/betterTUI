@@ -14,7 +14,7 @@ def vault(wrapper, child_obj):
     input = Input(screen, 2, 2, 30, "Login: ")
     select = Select(screen, 2, 2, "Profession: ", ["Student", "Teacher", "News"])
     counter = Counter(screen, 2, 2, 0, 100, "Age: ")
-    form = Form(screen, 4, 2, "Login", [input, select, counter])
+    form = Form(screen, 4, 2, "Login", {'login': input, 'profession': select, 'age': counter})
 
     wrapper = Wrapper(screen, [0, 0], [(form, withdraw)])
     wrapper.on("q", "Q")
