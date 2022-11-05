@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "betterTUI"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name="Oscar Gomez (Raxo)", email="oscargomez.raxo@gmail.com" },
 ]
@@ -15,7 +15,9 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
 ]
-
+dependencies = [
+  'windows-curses >= 2.3.1',
+]
 [project.urls]
 "Homepage" = "https://github.com/Gomez0015/easyTUI"
 "Bug Tracker" = "https://github.com/Gomez0015/easyTUI/issues"
