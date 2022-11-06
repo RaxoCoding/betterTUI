@@ -101,6 +101,16 @@ exit_func = wrapper.on("q", "Q")
 * *height* - height of the Box
 * **args* - curses character cell attributes
 
+##### Methods
+
+```py
+# initialize Box object
+box = Box(screen, 4, 2, 30, 15)
+
+# clear everything inside the box
+box.clear()
+```
+
 ### Input(screen: Screen, x: int, y: int, width: int, label: str, content: str = "", *args: Any)
 
 ##### Arguments
