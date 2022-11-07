@@ -25,7 +25,6 @@ class Wrapper:
             childArgs += ("\n", "KEY_ENTER", )
 
             key_str = self.matrix[self.pos[0]][self.pos[1]][0].on(*childArgs)
-            print(key_str)
 
             if key_str in args:
                 if not(key_str == "KEY_RIGHT" or key_str == "KEY_LEFT" or key_str == "KEY_UP" or key_str == "KEY_DOWN"):
