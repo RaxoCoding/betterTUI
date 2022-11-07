@@ -138,6 +138,35 @@ exit_key = input.on("KEY_UP", "KEY_DOWN")
 
 * *content* - the string currently saved in the Input
 
+### File(screen: Screen, x: int, y: int, label: str, content: str = "", *args: Any)
+
+##### Arguments
+
+* *screen* - Screen() Object
+* *x* - where File will start on x-axis
+* *y* - where File will start on y-axis
+* *label* - text for the File label
+* *content* - default File content
+* **args* - curses character cell attributes
+
+##### Methods
+
+```py
+# initialize File object
+file = File(screen, 5, 2, "File:")
+
+# turn file on and recieve exit_key whenever file is done
+# on: (*args: Any) -> int
+# args are the key_codes that when pressed, exit the file and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = file.on("KEY_UP", "KEY_DOWN")
+```
+
+##### Properties
+
+* *content* - the string currently saved in the Input
+
+
 ### Counter(screen: Screen, x: int, y: int, min: int, max: int, label: str, content: str = "", *args: Any)
 
 ##### Arguments

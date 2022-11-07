@@ -16,8 +16,8 @@ def vault(screen, child_obj):
 
     input = Input(screen, 2, 2, 30, "Login: ")
     select = Select(screen, 2, 2, "Profession: ", ["Student", "Teacher", "News"])
-    counter = Counter(screen, 2, 2, 0, 100, "Age: ")
-    form = Form(screen, 4, 2, "Login", {'login': input, 'profession': select, 'age': counter })
+    file = File(screen, 2, 2, "File: ")
+    form = Form(screen, 4, 2, "Login", {'login': input, 'profession': select, 'file': file })
 
     return [[(form, home)]]
 
