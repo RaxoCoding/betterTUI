@@ -27,7 +27,7 @@ class Button:
 
     def on(self, *args) -> int:
         if(len(args) == 0):
-            args = ("\n", "KEY_ENTER")
+            args =  ["\n", "KEY_ENTER"]
             
         self.screen.addstr(self.y+1, self.x+1, self.label, curses.A_REVERSE)
 

@@ -14,20 +14,18 @@ any.delete()
 
 * *screen* - Screen() object passed in when widget is initialized
 
-## Screen()
+## Screen(func: (screen: Any) -> None)
 the Screen object is where all widgets will be added and needs to be instantiated and passed on to widgets for them to show up. It includes all of the methods from the Window object in curses. (i.e. box(), addstr(), ...)
 
 #### Methods
 
 ```py
-# initialize Screen object
-screen = Screen()
+# initialize Screen object and pass it to func
+Screen(func)
 
-# close Screen object and all widgets in it
-screen.close()
-
-# example method from curses Window object
-screen.box()
+def func(screen):
+    # example method from curses Window object
+    screen.box()
 ```
 
 ## Wrapper(screen: Screen, start_pos: list, *args: list)

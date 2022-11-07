@@ -22,7 +22,7 @@ class Counter:
 
     def on(self, *args) -> int:
         if(len(args) == 0):
-            args = "\n"
+            args = ["\n", "KEY_ENTER"]
 
         self.screen.addstr(self.y, self.x, self.label, curses.A_REVERSE)
 

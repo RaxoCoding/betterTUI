@@ -21,9 +21,8 @@ def vault(screen, child_obj):
 
     return [[(form, home)]]
 
-def main():
-    screen = Screen()
-
+def main(screen):
+    curses.curs_set(0)
     screen.box()
 
     elements = home(screen)
@@ -39,7 +38,5 @@ def main():
         if(res in ['ALT_Q']): break
         else: elements = res[1](screen, res[0])
         screen.box()
-    
-    screen.close()
 
-main()
+Screen(main)
