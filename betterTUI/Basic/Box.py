@@ -25,8 +25,8 @@ class Box:
         screen.addstr(y+height, x+width, '┘', *args)
 
     def clear(self):
-        for i in range(1, self.width-1):
-            for x in range(1, self.height-1):
+        for i in range(1, self.width):
+            for x in range(1, self.height):
                 self.screen.addstr(self.y+x, self.x+i, " ")
 
     def delete(self):

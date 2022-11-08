@@ -58,7 +58,7 @@ class Input:
                     self.screen.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
-                elif((key_str == "KEY_LEFT") and (self.pos == 0) and ((self.show_content_pos - len(self.show_content)) < 0)):
+                elif((key_str == "KEY_LEFT") and (self.pos == 0) and ((self.show_content_pos - len(self.show_content)) <= 0)):
                     self.screen.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
