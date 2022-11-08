@@ -20,7 +20,7 @@ class SearchBar:
         self.input = Input(screen, x, y, width-(len(button_label)+1), input_label, *args)
         self.input.parent = self
 
-        self.button = Button(screen, x+width-(len(button_label)+1), y, button_label, *args)
+        self.button = Button(screen, x+width-(len(button_label)+1), y+1, button_label, *args)
         self.button.parent = self
 
     def on(self, *args) -> int:

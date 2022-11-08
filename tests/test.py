@@ -14,12 +14,9 @@ def home(screen, child_obj=None):
 
 def vault(screen, child_obj):
 
-    input = Input(screen, 2, 2, 30, "Login: ")
-    select = Select(screen, 2, 2, "Profession: ", ["Student", "Teacher", "News"])
-    file = File(screen, 2, 2, "File: ")
-    form = Form(screen, 4, 2, "Login", {'login': input, 'profession': select, 'file': file })
+    searchbar = SearchBar(screen, 4, 2, 30, "Login: ", "Submit: ")
 
-    return [[(form, home)]]
+    return [[(searchbar, home)]]
 
 def main(screen):
     curses.curs_set(0)
