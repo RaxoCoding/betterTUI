@@ -45,7 +45,7 @@ class Input:
         self.screen.addstr(self.y, self.x, self.label, curses.A_REVERSE)
         self.screen.move(self.y+2, self.x+2+self.pos)
         curses.curs_set(1)
-        self.show_content_pos = len(self.content)
+        self.show_content_pos = len(self.content)-1
 
         while(True):
             key_str = self.screen.getkey()
@@ -121,7 +121,7 @@ class Input:
             # TRAVEL INPUT TO LEFT
             if not (pos == 0):
                 self.pos -= 1
-            elif(pos == 0 and ((self.show_content_pos - len_show_content) >= 1)):
+            elif(pos == 0 and ((self.show_content_pos - len_show_content) >= 0)):
                 self.show_content = self.content[self.show_content_pos - len_show_content] + self.show_content[:-1]
                 self.show_content_pos -= 1
 
@@ -157,7 +157,6 @@ class Input:
             self.show_content_pos = pos
         else:
             self.show_content = self.content[(self.show_content_pos-len_show_content)+1:self.show_content_pos+1]
-
 
     def move(self, x ,y):
 
