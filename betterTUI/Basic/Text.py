@@ -1,5 +1,3 @@
-import curses
-
 from betterTUI.Screen import Screen
 
 class Text:
@@ -9,9 +7,12 @@ class Text:
         self.y = y
         self.content = content
         self.parent = None
+        self.timer = None
+        self.deleted = False
 
         screen.addstr(y, x, content, *args)
 
     def delete(self):
         self.screen.addstr(self.y, self.x, " " * len(self.content))
+
         del self

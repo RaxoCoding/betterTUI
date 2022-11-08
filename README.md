@@ -28,7 +28,7 @@ def func(screen):
     screen.box()
 ```
 
-## Wrapper(screen: Screen, start_pos: list, *args: list)
+## Wrapper(screen: Screen, start_pos: list, widgets: list)
 the Wrapper object is special it helps you handle all of your widgets, moving between them, and returning their corresponding functions.
 the Wrapper cannot handle normal widgets like "Text" its made to handle interactive objects which can be selected/clicked.
 Wrapper object's can be used to handle switching screens, if you have 1 screen it can handle your whole TUI.
@@ -37,7 +37,7 @@ Wrapper object's can be used to handle switching screens, if you have 1 screen i
 
 * *screen* - Screen() Object
 * *start_pos* - a list of 2 ints which represent the row and col of a widget to be "on" first (i.e. [2, 5] will turn "on" the object on the 2nd row and 5th col first)
-* **args* - a 2D Matrix of widgets and their corresponding functions in a tuple (i.e [(input, func), (button_1, func_1)], [(button_2, func_2)])
+* *widgets* - a 2D Matrix of widgets and their corresponding functions in a tuple (i.e [[(input, func), (button_1, func_1)], [(button_2, func_2)]])
 
 ##### Methods
 
@@ -50,7 +50,7 @@ button_1 = Button(screen, x+15, y, "Click Me 2!")
 button_2 = Button(screen, x+, y+6, "Click Me 3!")
 
 # initialize Wrapper object
-wrapper = Wrapper(screen, [0, 0], [(button, func), (button_1, func)], [(button_2, func)])
+wrapper = Wrapper(screen, [0, 0], [[(button, func), (button_1, func)], [(button_2, func)]])
 
 # insert widget after initilization
 # insert: (insert_pos: list, widget: Any, func: (...) -> Any) -> None

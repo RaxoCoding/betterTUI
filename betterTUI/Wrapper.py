@@ -3,9 +3,9 @@ from typing import Any, Callable
 from betterTUI import Screen
 
 class Wrapper:
-    def __init__(self, screen: Screen, start_pos: list, *args: list):
+    def __init__(self, screen: Screen, start_pos: list, widgets: list):
         self.screen = screen
-        self.matrix = args
+        self.matrix = widgets
         self.pos = start_pos
 
     def on(self, *args) -> int:

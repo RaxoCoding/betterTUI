@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "betterTUI"
-version = "0.0.16"
+version = "0.0.19"
 authors = [
   { name="Oscar Gomez (Raxo)", email="oscargomez.raxo@gmail.com" },
 ]
 description = "collection of curses widgets for building TUI's"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

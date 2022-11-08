@@ -14,7 +14,7 @@ class Line:
 
         if(vertical):
             max_y, max_x = screen.getmaxyx()
-            if self.length == 0: self.length = max_y-y
+            if self.length == 0: self.length = max_y-y-y
             for i in range(y, self.length+y):
                 screen.addstr(y+i, x, character, *args)
         else:
