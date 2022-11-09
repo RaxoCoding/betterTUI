@@ -1,3 +1,8 @@
+## Examples
+
+### Music Player [Code](https://github.com/Gomez0015/betterTUI/tree/master/examples/musicPlayer)
+
+
 # betterTUI - collection of curses widgets for building TUI's
 
 ### Global Methods
