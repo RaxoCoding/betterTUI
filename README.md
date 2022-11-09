@@ -1,7 +1,9 @@
 ## Examples
 
-### Music Player [Code](https://github.com/Gomez0015/betterTUI/tree/master/examples/musicPlayer)
+### Music Player 
+[Code](https://github.com/Gomez0015/betterTUI/tree/master/examples/musicPlayer)
 
+![Demo_Screenshot](https://github.com/Gomez0015/betterTUI/blob/f7c04ba5d005b92d3084f69dbf703e725abc2346/examples/musicPlayer/image.png)
 
 # betterTUI - collection of curses widgets for building TUI's
 
