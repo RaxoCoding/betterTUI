@@ -39,10 +39,10 @@ class Form:
             else:
                 raise Exception("Form: inputs must have an 'on' method")
 
-        button = Button(screen, x, y+padding, button_label, *args)
-        button.parent = self
+        submit_button = Button(screen, x, y+padding, button_label, *args)
+        submit_button.parent = self
 
-        self.inputs["submit"] = button
+        self.inputs["submit"] = submit_button
         self.key_ind.append("submit")
 
     def on(self, *args) -> int:
