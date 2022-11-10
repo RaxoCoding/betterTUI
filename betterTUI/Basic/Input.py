@@ -121,7 +121,7 @@ class Input:
             # TRAVEL INPUT TO LEFT
             if not (pos == 0):
                 self.pos -= 1
-            elif(pos == 0 and ((self.show_content_pos - len_show_content) >= 0)):
+            elif(pos == 0 and ((self.show_content_pos - len_show_content) > 0)):
                 self.show_content = self.content[self.show_content_pos - len_show_content] + self.show_content[:-1]
                 self.show_content_pos -= 1
 

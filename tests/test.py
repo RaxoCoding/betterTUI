@@ -26,7 +26,7 @@ def main(screen):
 
     while(True):
 
-        wrapper = Wrapper(screen, [0,0], *elements)
+        wrapper = Wrapper(screen, [0,0], elements)
         res = wrapper.on('ALT_Q')
 
         screen.clear()
