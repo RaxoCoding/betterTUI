@@ -145,6 +145,36 @@ exit_key = input.on("KEY_UP", "KEY_DOWN")
 
 * *content* - the string currently saved in the Input
 
+### TextArea(screen: Screen, x: int, y: int, width: int, height: int, label: str, content: Any = [""], *args: Any)
+
+##### Arguments
+
+* *screen* - Screen() Object
+* *x* - where TextArea will start on x-axis
+* *y* - where TextArea will start on y-axis
+* *width* - width of the TextArea
+* *height* - height of the TextArea
+* *label* - text for the TextArea label
+* *content* - default TextArea content
+* **args* - curses character cell attributes
+
+##### Methods
+
+```py
+# initialize TextArea object
+text_area = TextArea(screen, 5, 2, 30, 10, "TextArea:")
+
+# turn text_area on and recieve exit_key whenever text_area is done
+# on: (*args: Any) -> int
+# args are the key_codes that when pressed, exit the text_area and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = text_area.on("KEY_UP", "KEY_DOWN")
+```
+
+##### Properties
+
+* *content* - the string currently saved in the Input
+
 ### File(screen: Screen, x: int, y: int, label: str, content: str = "", *args: Any)
 
 ##### Arguments

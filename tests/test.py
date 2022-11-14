@@ -1,16 +1,14 @@
 from betterTUI import *
 
 def home(screen, child_obj=None):
-    button = Button(screen, 3, 2, "ENTER VAULT")
-    box = Box(screen, 2, 1, 20, 10)
-    box.clear()
+    text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:", ["Hello World", "Hello", "World"]), vault)
 
     button = (Button(screen, 14, 20, "ENTER VAULT"), vault)
 
     if(child_obj):
         print(child_obj.content)
 
-    return [[button]]
+    return [[text_area], [button]]
 
 def vault(screen, child_obj):
 

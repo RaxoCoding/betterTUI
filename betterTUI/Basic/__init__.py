@@ -9,3 +9,4 @@ from .Counter import Counter
 from .Select import Select
 from .File import File
 from .SlimButton import SlimButton
+from .TextArea import TextArea
