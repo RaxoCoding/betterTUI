@@ -104,6 +104,10 @@ class TextArea:
                     self.pos[1] -= 1
 
                     self.pos[0] = len(self.content[self.pos[1]])
+
+                    if(len(self.content[self.pos[1]]) == 0):
+                        self.content[self.pos[1]] = self.content[self.pos[1]+1]
+                        self.content.pop(self.pos[1]+1)
                 else:
 
                     if(len(self.content[self.pos[1]]) == pos[0]):
