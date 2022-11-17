@@ -1,12 +1,9 @@
 from betterTUI import *
 
 def home(screen, child_obj=None):
-    text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:", ["Hello World", "Hello", "World"]), vault)
+    text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:"), vault)
 
     button = (Button(screen, 14, 20, "ENTER VAULT"), vault)
-
-    if(child_obj):
-        print(child_obj.content)
 
     return [[text_area], [button]]
 
@@ -23,7 +20,6 @@ def main(screen):
     elements = home(screen)
 
     while(True):
-
         wrapper = Wrapper(screen, [0,0], elements)
         res = wrapper.on('ALT_Q')
 

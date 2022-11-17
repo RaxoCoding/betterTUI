@@ -10,7 +10,10 @@ class TextArea:
         self.width = width
         self.height = height
         self.label = label
-        self.content = content
+        if(len(content[0]) > 0):
+            self.content = content
+        else:
+            self.content = [""]
         self.pos = [0, 0]
         self.parent = None
 
@@ -31,8 +34,8 @@ class TextArea:
         screen.addstr(y, x, label)
 
         i = 0
-        for content in self.content:
-            self.screen.addstr(self.y+2+i, self.x+2, content)
+        for line in self.content:
+            self.screen.addstr(self.y+2+i, self.x+2, line)
             i += 1
 
     def on(self, *args) -> int:
@@ -60,7 +63,11 @@ class TextArea:
                     self.screen.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
-                elif((key_str in ["\n", "KEY_ENTER"] or key_str == "KEY_DOWN") and (self.pos[1] == self.height-3)):
+                elif((key_str in ["\n", "KEY_ENTER"]) and (self.pos[1] == self.height-3)):
+                    self.screen.addstr(self.y, self.x, self.label)
+                    curses.curs_set(0)
+                    return key_str
+                elif((key_str == "KEY_DOWN") and (self.pos[1] == len(self.content)-1)):
                     self.screen.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
@@ -103,7 +110,7 @@ class TextArea:
                         self.pos[0] -= 1
                         self.content[self.pos[1]] = self.content[self.pos[1]][:self.pos[0]] + self.content[self.pos[1]][self.pos[0]+1:]
 
-            if(len(self.content[self.pos[1]]) == 0):
+            if(len(self.content[self.pos[1]]) == 0 and not self.pos[1] == 0):
                 self.content.pop(self.pos[1])
 
         elif(key_str == "KEY_UP"):
