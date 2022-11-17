@@ -98,6 +98,9 @@ class TextArea:
             if not(pos == [0, 0]):
 
                 if(pos[0] == 0):
+                    if(len(self.content[self.pos[1]]) == 0 and not self.pos[1] == 0):
+                        self.content.pop(self.pos[1])
+
                     self.pos[1] -= 1
 
                     self.pos[0] = len(self.content[self.pos[1]])
@@ -109,9 +112,6 @@ class TextArea:
                     else:
                         self.pos[0] -= 1
                         self.content[self.pos[1]] = self.content[self.pos[1]][:self.pos[0]] + self.content[self.pos[1]][self.pos[0]+1:]
-
-            if(len(self.content[self.pos[1]]) == 0 and not self.pos[1] == 0):
-                self.content.pop(self.pos[1])
 
         elif(key_str == "KEY_UP"):
             # TRAVEL INPUT TO UP
@@ -145,9 +145,14 @@ class TextArea:
         elif(key_str in ["\n", "KEY_ENTER"]):
             if not (pos[1] == input_height):
 
-                if(pos[0] < len(self.content[self.pos[1]]) and not len(self.content) == input_height+1):
+                if(pos[0] == 0 and not len(self.content) == input_height+1):
                     self.content.insert(self.pos[1], "")
                     self.pos[1] += 1
+                elif(pos[0] < len(self.content[self.pos[1]]) and not len(self.content) == input_height+1):
+                    self.content.insert(self.pos[1], self.content[self.pos[1]][:pos[0]])
+                    self.pos[1] += 1
+                    self.content[self.pos[1]] = self.content[self.pos[1]][pos[0]:]
+                    self.pos[0] = 0
                 elif not len(self.content) == input_height+1:
                     self.pos[1] += 1
                     self.pos[0] = 0
@@ -156,7 +161,6 @@ class TextArea:
         elif(len(key_str) == 1):
             if(key_str.isprintable()):
                 if (pos[0] < input_length):
-
                     if(len(self.content[self.pos[1]]) == pos[0]):
                         self.content[self.pos[1]] += key_str
                         self.pos[0] += 1
