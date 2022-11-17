@@ -267,8 +267,8 @@ class TextArea:
         self.screen.addstr(y, x, self.label)
 
         i = 0
-        for content in self.content:
-            self.screen.addstr(self.y+2+i, self.x+2, content)
+        for content in self.content[self.content_start:self.height-2+self.content_start]:
+            self.screen.addstr(y+2+i, x+2, content)
             i += 1
 
         self.x = x
