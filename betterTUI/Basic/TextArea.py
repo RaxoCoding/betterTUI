@@ -15,6 +15,7 @@ class TextArea:
         else:
             self.content = [""]
         self.pos = [0, 0]
+        self.content_start = 0
         self.parent = None
 
         for i in range(0, width+1):
@@ -44,10 +45,13 @@ class TextArea:
         self.screen.move(self.y+2+self.pos[1], self.x+2+self.pos[0])
         curses.curs_set(1)
 
+        args += ("ALT_DOWN", )
+
         while(True):
             key_str = self.screen.getkey()
+
             if key_str in args: 
-                if not(key_str == "KEY_RIGHT" or key_str == "KEY_LEFT" or key_str == "KEY_DOWN" or key_str == "KEY_UP" or key_str in ["\n", "KEY_ENTER"]):
+                if not(key_str == "KEY_RIGHT" or key_str == "KEY_LEFT" or key_str == "KEY_DOWN" or key_str == "ALT_DOWN" or key_str == "KEY_UP" or key_str in ["\n", "KEY_ENTER"]):
                     self.screen.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
@@ -63,14 +67,14 @@ class TextArea:
                     self.screen.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
-                elif((key_str in ["\n", "KEY_ENTER"]) and (self.pos[1] == self.height-3)):
-                    self.screen.addstr(self.y, self.x, self.label)
-                    curses.curs_set(0)
-                    return key_str
                 elif((key_str == "KEY_DOWN") and (self.pos[1] == len(self.content)-1)):
                     self.screen.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
+                elif((key_str == "ALT_DOWN")):
+                    self.screen.addstr(self.y, self.x, self.label)
+                    curses.curs_set(0)
+                    return "KEY_DOWN"
                 else:
                     self.handle_key(key_str)
             else:
@@ -80,7 +84,7 @@ class TextArea:
                 self.screen.addstr(self.y+2+i, self.x+2, " "*(self.width-2))
 
             i = 0
-            for content in self.content:
+            for content in self.content[self.content_start:self.height-2+self.content_start]:
                 self.screen.addstr(self.y+2+i, self.x+2, content)
                 i += 1
 
@@ -89,92 +93,140 @@ class TextArea:
 
     def handle_key(self, key_str):
         pos = self.pos
+        combined_pos = self.pos[1] + self.content_start
         input_length = self.width-3
         input_height = self.height-3
 
         if(key_str in ["\b", "KEY_BACKSPACE"]):
 
             # if not at the start
-            if not(pos == [0, 0]):
+            if not([pos[0], combined_pos] == [0, 0]):
 
                 if(pos[0] == 0):
-                    if(len(self.content[self.pos[1]]) == 0 and not self.pos[1] == 0):
-                        self.content.pop(self.pos[1])
+                    
+                    if(pos[1] > 0):
+                        self.pos[1] -= 1
+                    else:
+                        self.content_start -= 1
 
-                    self.pos[1] -= 1
+                    combined_pos = self.pos[1] + self.content_start
 
-                    self.pos[0] = len(self.content[self.pos[1]])
+                    self.pos[0] = len(self.content[combined_pos])
 
-                    if(len(self.content[self.pos[1]]) == 0):
-                        self.content[self.pos[1]] = self.content[self.pos[1]+1]
-                        self.content.pop(self.pos[1]+1)
+                    if(len(self.content[combined_pos+1]) == 0 and not combined_pos == 0):
+                        self.content.pop(combined_pos+1)
+
+                    elif(len(self.content[combined_pos]) == 0):
+                        self.content[combined_pos] = self.content[combined_pos+1]
+                        self.content.pop(combined_pos+1)
+
+                    elif(self.content[combined_pos][-1] == '-'):
+                        self.content[combined_pos] = self.content[combined_pos][:-1]
+                        self.pos[0] -= 1
+
                 else:
 
-                    if(len(self.content[self.pos[1]]) == pos[0]):
+                    if(len(self.content[combined_pos]) == pos[0]):
                         self.pos[0] -= 1
-                        self.content[self.pos[1]] = self.content[self.pos[1]][:-1]
+                        self.content[combined_pos] = self.content[combined_pos][:-1]
+
                     else:
                         self.pos[0] -= 1
-                        self.content[self.pos[1]] = self.content[self.pos[1]][:self.pos[0]] + self.content[self.pos[1]][self.pos[0]+1:]
+                        self.content[combined_pos] = self.content[combined_pos][:self.pos[0]] + self.content[combined_pos][self.pos[0]+1:]
 
         elif(key_str == "KEY_UP"):
             # TRAVEL INPUT TO UP
-            if (pos[1] > 0):
+            if (combined_pos > 0):
                 self.pos[0] = 0
-                self.pos[1] -= 1
+
+                if(pos[1] > 0):
+                    self.pos[1] -= 1
+                else:
+                    self.content_start -= 1
 
         elif(key_str == "KEY_DOWN"):
 
-            if (pos[1] < input_height and pos[1]+1 < len(self.content)):
+            if (combined_pos+1 < len(self.content)):
                 self.pos[0] = 0
-                self.pos[1] += 1
+
+                if(pos[1] < input_height):
+                    self.pos[1] += 1
+                else:
+                    self.content_start += 1
 
         elif(key_str == "KEY_RIGHT"):
             # TRAVEL INPUT TO RIGHT
-            if (pos[0] < len(self.content[self.pos[1]])):
+            if (pos[0] < len(self.content[combined_pos])):
                 self.pos[0] += 1
-            elif(pos[0] == input_length and not pos[1] == input_height):
+
+            elif(pos[0] == input_length and combined_pos+1 < len(self.content)):
                 self.pos = [0, self.pos[1]+1]
 
         elif(key_str == "KEY_LEFT"):
 
             # TRAVEL INPUT TO LEFT
-            if not(pos == [0, 0]):
+            if not([pos[0], combined_pos] == [0, 0]):
                 if(pos[0] == 0):
-                    self.pos[1] -= 1
-                    self.pos[0] = len(self.content[self.pos[1]])
+
+                    if(pos[1] > 0):
+                        self.pos[1] -= 1
+                    else:
+                        self.content_start -= 1
+                    combined_pos = self.pos[1] + self.content_start
+
+                    self.pos[0] = len(self.content[combined_pos])
                 else:
                     self.pos[0] -= 1
 
         elif(key_str in ["\n", "KEY_ENTER"]):
-            if not (pos[1] == input_height):
 
-                if(pos[0] == 0 and not len(self.content) == input_height+1):
-                    self.content.insert(self.pos[1], "")
+            if(pos[0] == 0):
+                self.content.insert(combined_pos, "")
+                if(pos[1] < input_height):
                     self.pos[1] += 1
-                elif(pos[0] < len(self.content[self.pos[1]]) and not len(self.content) == input_height+1):
-                    self.content.insert(self.pos[1], self.content[self.pos[1]][:pos[0]])
+                else:
+                    self.content_start += 1
+
+            elif(pos[0] < len(self.content[combined_pos])):
+                self.content.insert(self.pos[1], self.content[self.pos[1]][:pos[0]])
+
+                if(pos[1] < input_height):
                     self.pos[1] += 1
-                    self.content[self.pos[1]] = self.content[self.pos[1]][pos[0]:]
-                    self.pos[0] = 0
-                elif not len(self.content) == input_height+1:
+                else:
+                    self.content_start += 1
+                combined_pos = self.pos[1] + self.content_start
+
+                self.content[combined_pos] = self.content[combined_pos][pos[0]:]
+                self.pos[0] = 0
+            else:
+                if(pos[1] < input_height):
                     self.pos[1] += 1
-                    self.pos[0] = 0
-                    self.content.append("")
+                else:
+                    self.content_start += 1
+
+                self.pos[0] = 0
+                self.content.append("")
 
         elif(len(key_str) == 1):
             if(key_str.isprintable()):
                 if (pos[0] < input_length):
-                    if(len(self.content[self.pos[1]]) == pos[0]):
-                        self.content[self.pos[1]] += key_str
+                    if(len(self.content[combined_pos]) == pos[0]):
+                        self.content[combined_pos] += key_str
                         self.pos[0] += 1
                     else:
-                        self.content[self.pos[1]] = self.content[self.pos[1]][:self.pos[0]] + key_str + self.content[self.pos[1]][self.pos[0]:]
+                        self.content[combined_pos] = self.content[combined_pos][:self.pos[0]] + key_str + self.content[combined_pos][self.pos[0]:]
                         self.pos[0] += 1
 
-                elif(pos[0] == input_length and not pos[1] == input_height):
-                    self.content.append(key_str)
-                    self.pos = [1, self.pos[1]+1]
+                elif(pos[0] == input_length):
+                    self.content[combined_pos] += '-'
+                    self.content.insert(combined_pos+1, key_str)
+                    
+                    if(pos[1] < input_height):
+                        self.pos[1] += 1
+                    else:
+                        self.content_start += 1
+
+                    self.pos = [1, self.pos[1]]
 
 
     def move(self, x ,y):
