@@ -35,8 +35,8 @@ class TextArea:
         screen.addstr(y, x, label)
 
         i = 0
-        for line in self.content:
-            self.screen.addstr(self.y+2+i, self.x+2, line)
+        for content in self.content[0:self.height-2]:
+            self.screen.addstr(self.y+2+i, self.x+2, content)
             i += 1
 
     def on(self, *args) -> int:
@@ -213,12 +213,37 @@ class TextArea:
                     if(len(self.content[combined_pos]) == pos[0]):
                         self.content[combined_pos] += key_str
                         self.pos[0] += 1
-                    else:
+                    elif(len(self.content[combined_pos]) < input_length):
                         self.content[combined_pos] = self.content[combined_pos][:self.pos[0]] + key_str + self.content[combined_pos][self.pos[0]:]
                         self.pos[0] += 1
+                    else:
+                        if(self.content[combined_pos][-1] == '-'):
+                            if(len(self.content) > combined_pos+1):
+                                if(len(self.content[combined_pos+1]) < input_length):
+                                    self.content[combined_pos+1] = self.content[combined_pos][-2] + self.content[combined_pos+1]
+                                else:
+                                    self.content.insert(combined_pos+1, self.content[combined_pos][-2] + "-")
+                            else:
+                                self.content.insert(combined_pos+1, self.content[combined_pos][-2])
+
+                            self.content[combined_pos] = self.content[combined_pos][:self.pos[0]] + key_str + self.content[combined_pos][self.pos[0]:-2]
+                            self.pos[0] += 1
+                            self.content[combined_pos] += '-'
+
+                        else:
+                            self.content.insert(combined_pos+1, self.content[combined_pos][-1])
+                            
+                            self.content[combined_pos] = self.content[combined_pos][:self.pos[0]] + key_str + self.content[combined_pos][self.pos[0]:-1]
+                            self.pos[0] += 1
+
+                            self.content[combined_pos] += '-'
 
                 elif(pos[0] == input_length):
-                    self.content[combined_pos] += '-'
+                    if not(self.content[combined_pos][-1] == '-'):
+                        self.content[combined_pos] += '-'
+                    else:
+                        key_str += '-'
+                        
                     self.content.insert(combined_pos+1, key_str)
                     
                     if(pos[1] < input_height):
