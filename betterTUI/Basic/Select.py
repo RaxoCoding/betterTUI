@@ -117,6 +117,9 @@ class Select:
 
         self.screen.addstr(self.y, self.x, " "*len(self.label))
         self.screen.addstr(y, x, self.label)
+        
+        self.screen.addstr(self.y, self.x+len(self.label), " "*len(self.content))
+        self.screen.addstr(y, x+len(self.label), self.content)
 
         self.x = x
         self.y = y

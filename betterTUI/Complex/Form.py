@@ -24,7 +24,7 @@ class Form:
                 input.parent = self
                 input.move(x, y+padding)
 
-                padding += input.height + 2
+                padding += input.height + 1
             else:
                 raise Exception("Form: inputs must have an 'on' method")
 
@@ -35,7 +35,7 @@ class Form:
                 input.parent = self
                 input.move(x, y+padding)
 
-                padding += input.height + 2
+                padding += input.height + 1
             else:
                 raise Exception("Form: inputs must have an 'on' method")
 
