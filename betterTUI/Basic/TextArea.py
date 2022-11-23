@@ -10,6 +10,12 @@ class TextArea:
         self.width = width
         self.height = height
         self.label = label
+
+        for i, line in enumerate(content):
+            if(len(line) > self.width-4):
+                content[i] = line[:self.width-3] + '-'
+                content.insert(i+1, line[self.width-3:])
+
         if(len(content[0]) > 0):
             self.content = content
         else:
@@ -213,7 +219,7 @@ class TextArea:
                     if(len(self.content[combined_pos]) == pos[0]):
                         self.content[combined_pos] += key_str
                         self.pos[0] += 1
-                    elif(len(self.content[combined_pos]) < input_length):
+                    elif(len(self.content[combined_pos]) <= input_length):
                         self.content[combined_pos] = self.content[combined_pos][:self.pos[0]] + key_str + self.content[combined_pos][self.pos[0]:]
                         self.pos[0] += 1
                     else:
@@ -243,15 +249,17 @@ class TextArea:
                         self.content[combined_pos] += '-'
                     else:
                         key_str += '-'
-                        
-                    self.content.insert(combined_pos+1, key_str)
-                    
-                    if(pos[1] < input_height):
-                        self.pos[1] += 1
-                    else:
-                        self.content_start += 1
 
-                    self.pos = [1, self.pos[1]]
+                    if not(key_str in ['-', '--']):
+                        
+                        self.content.insert(combined_pos+1, key_str)
+                        
+                        if(pos[1] < input_height):
+                            self.pos[1] += 1
+                        else:
+                            self.content_start += 1
+
+                        self.pos = [1, self.pos[1]]
 
 
     def move(self, x ,y):

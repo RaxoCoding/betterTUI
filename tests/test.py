@@ -1,7 +1,7 @@
 from betterTUI import *
 
 def home(screen, child_obj=None):
-    text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:"), vault)
+    text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:", ["ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"]), vault)
 
     # text_area[0].move(10, 10)
     button = (Button(screen, 14, 20, "ENTER VAULT"), vault)
