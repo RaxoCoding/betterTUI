@@ -22,7 +22,7 @@ any.delete()
 * *screen* - Screen() object passed in when widget is initialized
 
 ## Screen(func: (screen: Any) -> None)
-the Screen object is where all widgets will be added and needs to be instantiated and passed on to widgets for them to show up. It includes all of the methods from the Window object in curses. (i.e. box(), addstr(), ...)
+The Screen object is where all widgets will be added and needs to be instantiated and passed on to widgets for them to show up. It includes all of the methods from the Window object in curses. (i.e. box(), addstr(), ...)
 
 #### Methods
 
@@ -34,6 +34,16 @@ def func(screen):
     # example method from curses Window object
     screen.box()
 ```
+
+#### Colors
+The Screen object contains colors you can use to style your TUI
+
+* COLOR_BLUE
+* COLOR_BLUE_REVERSE
+* COLOR_GREEN
+* COLOR_GREEN_REVERSE
+* COLOR_RED
+* COLOR_RED_REVERSE
 
 ## Wrapper(screen: Screen, start_pos: list, widgets: list)
 the Wrapper object is special it helps you handle all of your widgets, moving between them, and returning their corresponding functions.
@@ -73,7 +83,7 @@ exit_func = wrapper.on("q", "Q")
 
 ## Simple Widgets
 
-### Text(screen: Screen, x: int, y: int, content: str, *args: Any)
+### Text(screen: Screen, x: int, y: int, content: str, color: int = 0, *args: Any)
 
 ##### Arguments
 
@@ -81,9 +91,10 @@ exit_func = wrapper.on("q", "Q")
 * *x* - where Text will start on x-axis
 * *y* - where Text will start on y-axis
 * *content* - Text you want to display
+* *color* - Widget Color
 * **args* - curses character cell attributes
 
-### Line(screen: Screen, x: int, y: int, character: str, length: int = 0, vertical: bool = False, *args: Any)
+### Line(screen: Screen, x: int, y: int, character: str, color: int = 0, length: int = 0, vertical: bool = False, *args: Any)
 
 ##### Arguments
 
@@ -91,11 +102,12 @@ exit_func = wrapper.on("q", "Q")
 * *x* - where Line will start on x-axis
 * *y* - where Line will start on y-axis
 * *character* - character to draw the Line with
+* *color* - Widget Color
 * *length=0* - length of the Line (0=max)
 * *vertical=False* - if the Line is vertical or not
 * **args* - curses character cell attributes
 
-### Box(screen: Screen, x: int, y: int, width: int, height: int, *args: Any)
+### Box(screen: Screen, x: int, y: int, width: int, height: int, color: int = 0, *args: Any)
 
 ##### Arguments
 
@@ -104,6 +116,7 @@ exit_func = wrapper.on("q", "Q")
 * *y* - where Box will start on y-axis
 * *width* - width of the Box
 * *height* - height of the Box
+* *color* - Widget Color
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -116,7 +129,7 @@ box = Box(screen, 4, 2, 30, 15)
 box.clear()
 ```
 
-### Input(screen: Screen, x: int, y: int, width: int, label: str, content: str = "", *args: Any)
+### Input(screen: Screen, x: int, y: int, width: int, label: str, color: int = 0, content: str = "", *args: Any)
 
 ##### Arguments
 
@@ -125,6 +138,7 @@ box.clear()
 * *y* - where Input will start on y-axis
 * *width* - width of the Input
 * *label* - text for the Input label
+* *color* - Widget Color
 * *content* - default Input content
 * **args* - curses character cell attributes
 
@@ -145,7 +159,7 @@ exit_key = input.on("KEY_UP", "KEY_DOWN")
 
 * *content* - the string currently saved in the Input
 
-### TextArea(screen: Screen, x: int, y: int, width: int, height: int, label: str, content: Any = [""], *args: Any)
+### TextArea(screen: Screen, x: int, y: int, width: int, height: int, label: str, color: int = 0, commands: Any = {}, content: Any = [""], *args: Any)
 
 ##### Arguments
 
@@ -155,6 +169,8 @@ exit_key = input.on("KEY_UP", "KEY_DOWN")
 * *width* - width of the TextArea
 * *height* - height of the TextArea
 * *label* - text for the TextArea label
+* *color* - Widget Color
+* *commands* - dict which can be used as commands when using / in TextArea (key=cmd name, value=what to write when its executed, make sure its an array of string(s))
 * *content* - default TextArea content
 * **args* - curses character cell attributes
 
@@ -175,7 +191,7 @@ exit_key = text_area.on("KEY_UP", "KEY_DOWN")
 
 * *content* - the string currently saved in the Input
 
-### File(screen: Screen, x: int, y: int, label: str, content: str = "", *args: Any)
+### File(screen: Screen, x: int, y: int, label: str, color: int = 0, content: str = "", *args: Any)
 
 ##### Arguments
 
@@ -184,6 +200,7 @@ exit_key = text_area.on("KEY_UP", "KEY_DOWN")
 * *y* - where File will start on y-axis
 * *label* - text for the File label
 * *content* - default File content
+* *color* - Widget Color
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -204,7 +221,7 @@ exit_key = file.on("KEY_UP", "KEY_DOWN")
 * *content* - the string currently saved in the Input
 
 
-### Counter(screen: Screen, x: int, y: int, min: int, max: int, label: str, content: str = "", *args: Any)
+### Counter(screen: Screen, x: int, y: int, min: int, max: int, label: str, color: int = 0, content: str = "", *args: Any)
 
 ##### Arguments
 
@@ -214,6 +231,7 @@ exit_key = file.on("KEY_UP", "KEY_DOWN")
 * *min* - min number possible
 * *max* - max number possible
 * *label* - text for the Counter label
+* *color* - Widget Color
 * *content* - default Counter content
 * **args* - curses character cell attributes
 
@@ -234,7 +252,7 @@ exit_key = counter.on("KEY_UP", "KEY_DOWN")
 
 * *content* - the string currently saved in the Input
 
-### Button(screen: Screen, x: int, y: int, label: str, *args: Any)
+### Button(screen: Screen, x: int, y: int, label: str, color: int = 0, *args: Any)
 
 ##### Arguments
 
@@ -242,6 +260,7 @@ exit_key = counter.on("KEY_UP", "KEY_DOWN")
 * *x* - where Button will start on x-axis
 * *y* - where Button will start on y-axis
 * *label* - text for the Button label
+* *color* - Widget Color
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -257,7 +276,7 @@ button = Button(screen, 5, 2, "Click Me!")
 exit_key = button.on("KEY_UP", "KEY_DOWN")
 ```
 
-### Select(screen: Screen, x: int, y: int, label: str, options: list, content: str = "", *args: Any)
+### Select(screen: Screen, x: int, y: int, label: str, options: list, color: int = 0, content: str = "", *args: Any)
 
 ##### Arguments
 
@@ -267,6 +286,7 @@ exit_key = button.on("KEY_UP", "KEY_DOWN")
 * *label* - text for the Select label
 * *options* - options that can be selected
 * *content* - default Selected option
+* *color* - Widget Color
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -288,7 +308,7 @@ exit_key = select.on("KEY_UP", "KEY_DOWN")
 
 ## Complex Widgets
 
-### SearchBar(screen: Screen, x: int, y: int, width: int, input_label: str, button_label: str, *args: Any)
+### SearchBar(screen: Screen, x: int, y: int, width: int, input_label: str, button_label: str, color: int = 0, *args: Any)
 
 ##### Arguments
 
@@ -298,6 +318,7 @@ exit_key = select.on("KEY_UP", "KEY_DOWN")
 * *width* - width of the whole SearchBar (needs to atleast be bigger than len(button_label) + 1)
 * *input_label* - text for the Input label
 * *button_label* - text for the Button label
+* *color* - Widget Color
 * **args* - curses character cell attributes
 
 ##### Methods
@@ -317,7 +338,7 @@ exit_key = search_bar.on("KEY_LEFT", "KEY_RIGHT")
 
 * *content* - the string currently saved in the SearchBar
 
-### Form(screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data: dict, *args: Any)
+### Form(screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data: dict, color: int = 0, *args: Any)
 
 ##### Arguments
 
@@ -326,6 +347,7 @@ exit_key = search_bar.on("KEY_LEFT", "KEY_RIGHT")
 * *y* - where SearchBar will start on y-axis
 * *button_label* - text for the submit Button label
 * *inputs* - dict of the widgets to use in the Form and their keys (must have the "on" method)
+* *color* - Widget Color 
 * *extra_data* - dict of data and keys to pass after form is submitted ( think of it as a hidden input in HTML )
 * **args* - curses character cell attributes
 

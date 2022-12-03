@@ -3,7 +3,7 @@ import curses
 from betterTUI.Screen import Screen
 
 class Input:
-    def __init__(self, screen: Screen, x: int, y: int, width: int, label: str, content="", *args):
+    def __init__(self, screen: Screen, x: int, y: int, width: int, label: str, color=0, content="", *args):
         self.screen = screen
         self.x = x
         self.y = y
@@ -15,19 +15,20 @@ class Input:
         self.show_content_pos = 0
         self.pos = 0
         self.parent = None
+        self.color = color
 
         for i in range(0, width+1):
-            screen.addstr(y+1, x+i, "─")
-            screen.addstr(y+3, x+i, "─")
+            self.addstr(y+1, x+i, "─")
+            self.addstr(y+3, x+i, "─")
 
-        screen.addstr(y+1, x, "┌")
-        screen.addstr(y+1, x+width, "┐")
-        screen.addstr(y+2, x, "│")
-        screen.addstr(y+2, x+width, "│")
-        screen.addstr(y+3, x, "└")
-        screen.addstr(y+3, x+width, "┘")
+        self.addstr(y+1, x, "┌")
+        self.addstr(y+1, x+width, "┐")
+        self.addstr(y+2, x, "│")
+        self.addstr(y+2, x+width, "│")
+        self.addstr(y+3, x, "└")
+        self.addstr(y+3, x+width, "┘")
 
-        screen.addstr(y, x, label)
+        self.addstr(y, x, label)
 
         if(len(content) < self.width-3):
             self.show_content = self.content
@@ -36,13 +37,21 @@ class Input:
             self.show_content = self.content[0:self.width-3]
             self.show_content_pos = self.width-3
 
-        screen.addstr(y+2, x+2, self.show_content)
+        self.addstr(y+2, x+2, self.show_content)
+
+    def addstr(self, y:int, x:int, content:str, reverse=False):
+        i = 0
+        if (reverse): i = 1
+
+        self.screen.attron(curses.color_pair(self.color+i))
+        self.screen.addstr(y, x, content)
+        self.screen.attroff(curses.color_pair(self.color+i))
 
     def on(self, *args) -> int:
         if(len(args) == 0):
             args = ["\n", "KEY_ENTER"]
 
-        self.screen.addstr(self.y, self.x, self.label, curses.A_REVERSE)
+        self.addstr(self.y, self.x, self.label, curses.A_REVERSE)
         self.screen.move(self.y+2, self.x+2+self.pos)
         curses.curs_set(1)
         self.show_content_pos = len(self.content)-1
@@ -51,15 +60,15 @@ class Input:
             key_str = self.screen.getkey()
             if key_str in args: 
                 if not(key_str == "KEY_RIGHT" or key_str == "KEY_LEFT"):
-                    self.screen.addstr(self.y, self.x, self.label)
+                    self.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
                 elif((key_str == "KEY_RIGHT") and (self.pos == len(self.show_content)) and (self.show_content_pos >= len(self.content) - 1)):
-                    self.screen.addstr(self.y, self.x, self.label)
+                    self.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
                 elif((key_str == "KEY_LEFT") and (self.pos == 0) and ((self.show_content_pos - len(self.show_content)) <= 0)):
-                    self.screen.addstr(self.y, self.x, self.label)
+                    self.addstr(self.y, self.x, self.label)
                     curses.curs_set(0)
                     return key_str
                 else:
@@ -67,8 +76,8 @@ class Input:
             else:
                 self.handle_key(key_str)
 
-            self.screen.addstr(self.y+2, self.x+2, " "*(self.width-2))
-            self.screen.addstr(self.y+2, self.x+2, self.show_content)
+            self.addstr(self.y+2, self.x+2, " "*(self.width-2))
+            self.addstr(self.y+2, self.x+2, self.show_content)
             self.screen.move(self.y+2, self.x+2+self.pos)
             self.screen.refresh()
 
@@ -172,18 +181,18 @@ class Input:
         self.screen.addstr(self.y, self.x, " "*len(self.label))
 
         for i in range(0, self.width+1):
-            self.screen.addstr(y+1, x+i, "─")
-            self.screen.addstr(y+3, x+i, "─")
+            self.addstr(y+1, x+i, "─")
+            self.addstr(y+3, x+i, "─")
 
-        self.screen.addstr(y+1, x, "┌")
-        self.screen.addstr(y+1, x+self.width, "┐")
-        self.screen.addstr(y+2, x, "│")
-        self.screen.addstr(y+2, x+self.width, "│")
-        self.screen.addstr(y+3, x, "└")
-        self.screen.addstr(y+3, x+self.width, "┘")
+        self.addstr(y+1, x, "┌")
+        self.addstr(y+1, x+self.width, "┐")
+        self.addstr(y+2, x, "│")
+        self.addstr(y+2, x+self.width, "│")
+        self.addstr(y+3, x, "└")
+        self.addstr(y+3, x+self.width, "┘")
 
-        self.screen.addstr(y, x, self.label)
-        self.screen.addstr(y+2, x+2, self.show_content)
+        self.addstr(y, x, self.label)
+        self.addstr(y+2, x+2, self.show_content)
 
         self.x = x
         self.y = y

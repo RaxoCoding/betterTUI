@@ -4,7 +4,7 @@ from betterTUI.Screen import Screen
 from betterTUI.Basic import Input, Counter, Box, Button
 
 class Form:
-    def __init__(self, screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data={}, *args):
+    def __init__(self, screen: Screen, x: int, y: int, button_label: str, inputs: dict, color=0, extra_data={}, *args):
         self.screen = screen
         self.x = x
         self.y = y
@@ -14,6 +14,7 @@ class Form:
         self.content = {}
         self.pos = 0
         self.parent = None
+        self.color
 
         for k, v in extra_data.items():
             self.content[k] = v
@@ -39,7 +40,7 @@ class Form:
             else:
                 raise Exception("Form: inputs must have an 'on' method")
 
-        submit_button = Button(screen, x, y+padding, button_label, *args)
+        submit_button = Button(screen, x, y+padding, button_label, color=self.color)
         submit_button.parent = self
 
         self.inputs["submit"] = submit_button

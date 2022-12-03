@@ -4,7 +4,7 @@ from betterTUI.Screen import Screen
 from betterTUI.Basic import Input, Button
 
 class SearchBar:
-    def __init__(self, screen: Screen, x: int, y: int, width: int, input_label: str, button_label: str, *args):
+    def __init__(self, screen: Screen, x: int, y: int, width: int, input_label: str, button_label: str, color=0, *args):
         self.screen = screen
         self.x = x
         self.y = y
@@ -13,14 +13,15 @@ class SearchBar:
         self.content = ""
         self.pos = 0
         self.parent = None
+        self.color = color
 
         if(width < len(button_label)+1):
             raise Exception("SearchBar: width to small!")
 
-        self.input = Input(screen, x, y, width-(len(button_label)+1), input_label, *args)
+        self.input = Input(screen, x, y, width-(len(button_label)+1), input_label, color=self.color)
         self.input.parent = self
 
-        self.button = Button(screen, x+width-(len(button_label)+1), y+1, button_label, *args)
+        self.button = Button(screen, x+width-(len(button_label)+1), y+1, button_label, color=self.color)
         self.button.parent = self
 
     def on(self, *args) -> int:
