@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>betterTUI</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "betterTUI - collection of curses widgets for building TUI\u0027s";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> betterTUI
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="" href="Home">index.md</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">betterTUI</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>betterTUI - collection of curses widgets for building TUI's</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="bettertui-collection-of-curses-widgets-for-building-tuis">betterTUI - collection of curses widgets for building TUI's</h1>
+<p>The purpose of betterTUI is to make creating TUI's in python with navigation, input
+and colors easy and fast. I developped this library over curses because I could not find any others
+which accomplished this goal. If you want to contribute to the library, you are welcome to add
+Issues/PullRequests and I will look at them ASAP!</p>
+<h3 id="global-methods">Global Methods</h3>
+<pre><code class="language-py"># initialize Any object
+any = Any()
+
+# (excludes: Screen) delete any object and all of its children
+any.delete()
+</code></pre>
+<h3 id="global-properties">Global Properties</h3>
+<ul>
+<li><em>screen</em> - Screen() object passed in when widget is initialized</li>
+</ul>
+<h2 id="screenfunc-screen-any-none">Screen(func: (screen: Any) -&gt; None)</h2>
+<p>The Screen object is where all widgets will be added and needs to be instantiated and passed on to widgets for them to show up. It includes all of the methods from the Window object in curses. (i.e. box(), addstr(), ...)</p>
+<h4 id="methods">Methods</h4>
+<pre><code class="language-py"># initialize Screen object and pass it to func
+Screen(func)
+
+def func(screen):
+    # example method from curses Window object
+    screen.box()
+</code></pre>
+<h4 id="colors">Colors</h4>
+<p>The Screen object contains colors you can use to style your TUI</p>
+<ul>
+<li>COLOR_BLUE</li>
+<li>COLOR_BLUE_REVERSE</li>
+<li>COLOR_GREEN</li>
+<li>COLOR_GREEN_REVERSE</li>
+<li>COLOR_RED</li>
+<li>COLOR_RED_REVERSE</li>
+</ul>
+<p>To create your own colors:
+Make sure to init a color code &gt; 20
+and a pair &gt; 20</p>
+<pre><code class="language-py">curses.init_color(20, 600, 600, 600) # LIGHT GREY
+curses.init_color(21, 50, 50, 50) # DARK GREY
+curses.init_pair(20, 21, 20)# 2: Dark Grey on Light Grey
+</code></pre>
+<p>you can now pass the pair # as the color parameter to a Widget</p>
+<h2 id="wrapperscreen-screen-start_pos-list-widgets-list">Wrapper(screen: Screen, start_pos: list, widgets: list)</h2>
+<p>the Wrapper object is special it helps you handle all of your widgets, moving between them, and returning their corresponding functions.
+the Wrapper cannot handle normal widgets like "Text" its made to handle interactive objects which can be selected/clicked.
+Wrapper object's can be used to handle switching screens, if you have 1 screen it can handle your whole TUI.</p>
+<h5 id="arguments">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>start_pos</em> - a list of 2 ints which represent the row and col of a widget to be "on" first (i.e. [2, 5] will turn "on" the object on the 2nd row and 5th col first)</li>
+<li><em>widgets</em> - a 2D Matrix of widgets and their corresponding functions in a tuple (i.e [[(input, func), (button_1, func_1)], [(button_2, func_2)]])</li>
+</ul>
+<h5 id="methods_1">Methods</h5>
+<pre><code class="language-py">def func(child_obj, wrapper):
+    Text(screen, child_obj.x, child_obj.y+3, &quot;Clicked ^&quot;)
+
+button = Button(screen, x, y, &quot;Click Me 1!&quot;)
+button_1 = Button(screen, x+15, y, &quot;Click Me 2!&quot;)
+button_2 = Button(screen, x+, y+6, &quot;Click Me 3!&quot;)
+
+# initialize Wrapper object
+wrapper = Wrapper(screen, [0, 0], [[(button, func), (button_1, func)], [(button_2, func)]])
+
+# insert widget after initilization
+# insert: (insert_pos: list, widget: Any, func: (...) -&gt; Any) -&gt; None
+# insert_pos is where the widget will be added in the matrix (row, col)
+wrapper.insert([0, 2], button, button_func)
+
+# turn wrapper on and recieve exit_key whenever wrapper is done
+# on: (*args: Any) -&gt; int
+# args are the keys that when pressed, exit the wrapper and return the key
+# if you provide no exit keys ENTER key will be the default exit
+exit_func = wrapper.on(&quot;q&quot;, &quot;Q&quot;)
+</code></pre>
+<h2 id="simple-widgets">Simple Widgets</h2>
+<h3 id="textscreen-screen-x-int-y-int-content-str-color-int-0-args-any">Text(screen: Screen, x: int, y: int, content: str, color: int = 0, *args: Any)</h3>
+<h5 id="arguments_1">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where Text will start on x-axis</li>
+<li><em>y</em> - where Text will start on y-axis</li>
+<li><em>content</em> - Text you want to display</li>
+<li><em>color</em> - Widget Color</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h3 id="linescreen-screen-x-int-y-int-character-str-color-int-0-length-int-0-vertical-bool-false-args-any">Line(screen: Screen, x: int, y: int, character: str, color: int = 0, length: int = 0, vertical: bool = False, *args: Any)</h3>
+<h5 id="arguments_2">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where Line will start on x-axis</li>
+<li><em>y</em> - where Line will start on y-axis</li>
+<li><em>character</em> - character to draw the Line with</li>
+<li><em>color</em> - Widget Color</li>
+<li><em>length=0</em> - length of the Line (0=max)</li>
+<li><em>vertical=False</em> - if the Line is vertical or not</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h3 id="boxscreen-screen-x-int-y-int-width-int-height-int-color-int-0-args-any">Box(screen: Screen, x: int, y: int, width: int, height: int, color: int = 0, *args: Any)</h3>
+<h5 id="arguments_3">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where Box will start on x-axis</li>
+<li><em>y</em> - where Box will start on y-axis</li>
+<li><em>width</em> - width of the Box</li>
+<li><em>height</em> - height of the Box</li>
+<li><em>color</em> - Widget Color</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_2">Methods</h5>
+<pre><code class="language-py"># initialize Box object
+box = Box(screen, 4, 2, 30, 15)
+
+# clear everything inside the box
+box.clear()
+</code></pre>
+<h3 id="inputscreen-screen-x-int-y-int-width-int-label-str-color-int-0-content-str-args-any">Input(screen: Screen, x: int, y: int, width: int, label: str, color: int = 0, content: str = "", *args: Any)</h3>
+<h5 id="arguments_4">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where Input will start on x-axis</li>
+<li><em>y</em> - where Input will start on y-axis</li>
+<li><em>width</em> - width of the Input</li>
+<li><em>label</em> - text for the Input label</li>
+<li><em>color</em> - Widget Color</li>
+<li><em>content</em> - default Input content</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_3">Methods</h5>
+<pre><code class="language-py"># initialize Input object
+input = Input(screen, 5, 2, 30, &quot;Input:&quot;)
+
+# turn input on and recieve exit_key whenever input is done
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the input and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = input.on(&quot;KEY_UP&quot;, &quot;KEY_DOWN&quot;)
+</code></pre>
+<h5 id="properties">Properties</h5>
+<ul>
+<li><em>content</em> - the string currently saved in the Input</li>
+</ul>
+<h3 id="textareascreen-screen-x-int-y-int-width-int-height-int-label-str-color-int-0-commands-any-content-any-args-any">TextArea(screen: Screen, x: int, y: int, width: int, height: int, label: str, color: int = 0, commands: Any = {}, content: Any = [""], *args: Any)</h3>
+<h5 id="arguments_5">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where TextArea will start on x-axis</li>
+<li><em>y</em> - where TextArea will start on y-axis</li>
+<li><em>width</em> - width of the TextArea</li>
+<li><em>height</em> - height of the TextArea</li>
+<li><em>label</em> - text for the TextArea label</li>
+<li><em>color</em> - Widget Color</li>
+<li><em>commands</em> - dict which can be used as commands when using / in TextArea (key=cmd name, value=what to write when its executed, make sure its an array of string(s))</li>
+<li><em>content</em> - default TextArea content</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_4">Methods</h5>
+<pre><code class="language-py"># initialize TextArea object
+text_area = TextArea(screen, 5, 2, 30, 10, &quot;TextArea:&quot;)
+
+# turn text_area on and recieve exit_key whenever text_area is done
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the text_area and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = text_area.on(&quot;KEY_UP&quot;, &quot;KEY_DOWN&quot;)
+</code></pre>
+<h5 id="properties_1">Properties</h5>
+<ul>
+<li><em>content</em> - the string currently saved in the Input</li>
+</ul>
+<h3 id="filescreen-screen-x-int-y-int-label-str-color-int-0-content-str-args-any">File(screen: Screen, x: int, y: int, label: str, color: int = 0, content: str = "", *args: Any)</h3>
+<h5 id="arguments_6">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where File will start on x-axis</li>
+<li><em>y</em> - where File will start on y-axis</li>
+<li><em>label</em> - text for the File label</li>
+<li><em>content</em> - default File content</li>
+<li><em>color</em> - Widget Color</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_5">Methods</h5>
+<pre><code class="language-py"># initialize File object
+file = File(screen, 5, 2, &quot;File:&quot;)
+
+# turn file on and recieve exit_key whenever file is done
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the file and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = file.on(&quot;KEY_UP&quot;, &quot;KEY_DOWN&quot;)
+</code></pre>
+<h5 id="properties_2">Properties</h5>
+<ul>
+<li><em>content</em> - the string currently saved in the Input</li>
+</ul>
+<h3 id="counterscreen-screen-x-int-y-int-min-int-max-int-label-str-color-int-0-content-str-args-any">Counter(screen: Screen, x: int, y: int, min: int, max: int, label: str, color: int = 0, content: str = "", *args: Any)</h3>
+<h5 id="arguments_7">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where Counter will start on x-axis</li>
+<li><em>y</em> - where Counter will start on y-axis</li>
+<li><em>min</em> - min number possible</li>
+<li><em>max</em> - max number possible</li>
+<li><em>label</em> - text for the Counter label</li>
+<li><em>color</em> - Widget Color</li>
+<li><em>content</em> - default Counter content</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_6">Methods</h5>
+<pre><code class="language-py"># initialize Counter object
+counter = Counter(screen, 5, 2, -5, 15, &quot;Counter: &quot;)
+
+# turn counter on and recieve exit_key whenever counter is done
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the counter and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = counter.on(&quot;KEY_UP&quot;, &quot;KEY_DOWN&quot;)
+</code></pre>
+<h5 id="properties_3">Properties</h5>
+<ul>
+<li><em>content</em> - the string currently saved in the Input</li>
+</ul>
+<h3 id="buttonscreen-screen-x-int-y-int-label-str-color-int-0-args-any">Button(screen: Screen, x: int, y: int, label: str, color: int = 0, *args: Any)</h3>
+<h5 id="arguments_8">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where Button will start on x-axis</li>
+<li><em>y</em> - where Button will start on y-axis</li>
+<li><em>label</em> - text for the Button label</li>
+<li><em>color</em> - Widget Color</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_7">Methods</h5>
+<pre><code class="language-py"># initialize Button object
+button = Button(screen, 5, 2, &quot;Click Me!&quot;)
+
+# turn button on and recieve exit_key whenever button is exited
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the button and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = button.on(&quot;KEY_UP&quot;, &quot;KEY_DOWN&quot;)
+</code></pre>
+<h3 id="selectscreen-screen-x-int-y-int-label-str-options-list-color-int-0-content-str-args-any">Select(screen: Screen, x: int, y: int, label: str, options: list, color: int = 0, content: str = "", *args: Any)</h3>
+<h5 id="arguments_9">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where Select will start on x-axis</li>
+<li><em>y</em> - where Select will start on y-axis</li>
+<li><em>label</em> - text for the Select label</li>
+<li><em>options</em> - options that can be selected</li>
+<li><em>content</em> - default Selected option</li>
+<li><em>color</em> - Widget Color</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_8">Methods</h5>
+<pre><code class="language-py"># initialize Select object
+select = Select(screen, 5, 2, &quot;Options: &quot;, [&quot;Option 1&quot;, &quot;Option 2&quot;, &quot;Option 3&quot;])
+
+# turn select on and recieve exit_key whenever select is exited
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the select and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = select.on(&quot;KEY_UP&quot;, &quot;KEY_DOWN&quot;)
+</code></pre>
+<h5 id="properties_4">Properties</h5>
+<ul>
+<li><em>content</em> - the currently selected options</li>
+</ul>
+<h2 id="complex-widgets">Complex Widgets</h2>
+<h3 id="searchbarscreen-screen-x-int-y-int-width-int-input_label-str-button_label-str-color-int-0-args-any">SearchBar(screen: Screen, x: int, y: int, width: int, input_label: str, button_label: str, color: int = 0, *args: Any)</h3>
+<h5 id="arguments_10">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where SearchBar will start on x-axis</li>
+<li><em>y</em> - where SearchBar will start on y-axis</li>
+<li><em>width</em> - width of the whole SearchBar (needs to atleast be bigger than len(button_label) + 1)</li>
+<li><em>input_label</em> - text for the Input label</li>
+<li><em>button_label</em> - text for the Button label</li>
+<li><em>color</em> - Widget Color</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_9">Methods</h5>
+<pre><code class="language-py"># initialize SearchBar object
+search_bar = SearchBar(screen, 5, 2, 20, &quot;Search: &quot;, &quot;Enter&quot;)
+
+# turn search_bar on and recieve exit_key whenever search_bar is exited
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the search_bar and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = search_bar.on(&quot;KEY_LEFT&quot;, &quot;KEY_RIGHT&quot;)
+</code></pre>
+<h5 id="properties_5">Properties</h5>
+<ul>
+<li><em>content</em> - the string currently saved in the SearchBar</li>
+</ul>
+<h3 id="formscreen-screen-x-int-y-int-button_label-str-inputs-dict-extra_data-dict-color-int-0-args-any">Form(screen: Screen, x: int, y: int, button_label: str, inputs: dict, extra_data: dict, color: int = 0, *args: Any)</h3>
+<h5 id="arguments_11">Arguments</h5>
+<ul>
+<li><em>screen</em> - Screen() Object</li>
+<li><em>x</em> - where SearchBar will start on x-axis</li>
+<li><em>y</em> - where SearchBar will start on y-axis</li>
+<li><em>button_label</em> - text for the submit Button label</li>
+<li><em>inputs</em> - dict of the widgets to use in the Form and their keys (must have the "on" method)</li>
+<li><em>color</em> - Widget Color </li>
+<li><em>extra_data</em> - dict of data and keys to pass after form is submitted ( think of it as a hidden input in HTML )</li>
+<li>*<em>args</em> - curses character cell attributes</li>
+</ul>
+<h5 id="methods_10">Methods</h5>
+<pre><code class="language-py"># x and y of these objects don't matter, it will be moved
+input_1 = Input(screen, 2, 2, 30, &quot;Login: &quot;)
+input_2 = Input(screen, 2, 2, 30, &quot;Password: &quot;)
+counter = Counter(screen, 2, 2, 0, 100, &quot;Age: &quot;)
+
+# initialize Form object
+form = Form(screen, 4, 2, &quot;Login&quot;, {'login': input_1, 'password': input_2, 'age': counter})
+
+# turn form on and recieve exit_key whenever form is exited
+# on: (*args: Any) -&gt; int
+# args are the key_codes that when pressed, exit the form and return the key_code
+# if you provide no exit keys ENTER key will be the default exit
+exit_key = form.on(&quot;KEY_LEFT&quot;, &quot;KEY_RIGHT&quot;)
+</code></pre>
+<h5 id="properties_6">Properties</h5>
+<ul>
+<li><em>content</em> - list of the input(s) content(s) in order</li>
+</ul>
+<p>cats = gigachad</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.4.2
+Build Date UTC : 2022-12-05 09:52:06.621042+00:00
+-->
