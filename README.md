@@ -45,6 +45,16 @@ The Screen object contains colors you can use to style your TUI
 * COLOR_RED
 * COLOR_RED_REVERSE
 
+To create your own colors:
+Make sure to init a color code > 20
+and a pair > 20
+```py
+curses.init_color(20, 600, 600, 600) # LIGHT GREY
+curses.init_color(21, 50, 50, 50) # DARK GREY
+curses.init_pair(20, 21, 20)# 2: Dark Grey on Light Grey
+```
+you can now pass the pair # as the color parameter to a Widget
+
 ## Wrapper(screen: Screen, start_pos: list, widgets: list)
 the Wrapper object is special it helps you handle all of your widgets, moving between them, and returning their corresponding functions.
 the Wrapper cannot handle normal widgets like "Text" its made to handle interactive objects which can be selected/clicked.
