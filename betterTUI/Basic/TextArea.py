@@ -115,7 +115,7 @@ class TextArea:
                     if(k.startswith(content)):
                         self.controlMatches.append(k)
                 if (len(self.controlMatches) > 0): 
-                    max_len = len(max(self.controlMatches)) + 1
+                    max_len = len(max(self.controlMatches, key=len)) + 1
                     for i, key in enumerate(self.controlMatches):
                         rev = True
                         if (self.controlPos == i): rev = False
