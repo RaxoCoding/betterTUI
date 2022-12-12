@@ -88,9 +88,9 @@ class TextArea:
                     return exit_widget(key_str)
                 elif((key_str == "KEY_LEFT") and (self.pos[0] == 0)):
                     return exit_widget(key_str)
-                elif((key_str == "KEY_UP") and (self.pos[1] == 0)):
+                elif((key_str == "KEY_UP") and (self.pos[1] == 0 and not self.control)):
                     return exit_widget(key_str)
-                elif((key_str == "KEY_DOWN") and (self.pos[1] == len(self.content)-1)):
+                elif((key_str == "KEY_DOWN") and (self.pos[1] == len(self.content)-1 and not self.control)):
                     return exit_widget(key_str)
                 elif((key_str == "ALT_DOWN")):
                     return exit_widget("KEY_DOWN")
@@ -176,12 +176,9 @@ class TextArea:
         elif(key_str == "KEY_UP"):
             # TRAVEL INPUT TO UP
             if(self.control):
-
                 if (self.controlPos > 0):
                     self.controlPos -= 1
-
             else:
-
                 if (combined_pos > 0):
                     self.pos[0] = 0
 
@@ -220,9 +217,6 @@ class TextArea:
             if (self.control and self.pos[0]-1 == self.controlStartPos[0]):
                 self.control = False
                 line = self.content[self.controlStartPos[1]]
-                self.content[self.controlStartPos[1]] = line[0:self.controlStartPos[0]] + line[self.controlStartPos[0]+1+len(line[self.controlStartPos[0]+1:].split(" ")[0]):] 
-
-
 
             # TRAVEL INPUT TO LEFT
             if not([pos[0], combined_pos] == [0, 0]):
@@ -241,18 +235,19 @@ class TextArea:
         elif(key_str in ["\n", "KEY_ENTER"]):
 
             if(self.control):
-               key = self.controlMatches[self.controlPos]
-               value = self.controlCommands[key]
+                try:
+                    key = self.controlMatches[self.controlPos]
+                    value = self.controlCommands[key]
 
-               line = self.content[self.controlStartPos[1]]
-               self.content[self.controlStartPos[1]] = line[0:self.controlStartPos[0]] + line[self.controlStartPos[0]+1+len(line[self.controlStartPos[0]+1:].split(" ")[0]):] 
+                    line = self.content[self.controlStartPos[1]]
+                    self.content[self.controlStartPos[1]] = line[0:self.controlStartPos[0]] + line[self.controlStartPos[0]+1+len(line[self.controlStartPos[0]+1:].split(" ")[0]):] 
 
+                    for line in value[::-1]:
+                        self.content.insert(self.controlStartPos[1], line)
 
-               for line in value[::-1]:
-                   self.content.insert(self.controlStartPos[1], line)
-
-               self.control = False
-            
+                    self.control = False
+                except:
+                    self.control = False
             else:
 
                  if(pos[0] == 0):
@@ -293,8 +288,6 @@ class TextArea:
                     if(key_str == " "):
                         self.control = False
                         line = self.content[self.controlStartPos[1]]
-                        self.content[self.controlStartPos[1]] = line[0:self.controlStartPos[0]] + line[self.controlStartPos[0]+1+len(line[self.controlStartPos[0]+1:].split(" ")[0]):] 
-
                                 
                 if (pos[0] < input_length):
                     if(len(self.content[combined_pos]) == pos[0]):
