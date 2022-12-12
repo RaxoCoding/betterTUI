@@ -18,8 +18,12 @@ class TextArea:
 
         for i, line in enumerate(content):
             if(len(line) > self.width-4):
-                content[i] = line[:self.width-3] + '-'
-                content.insert(i+1, line[self.width-3:])
+                if not(line[self.width-3] == '-'):
+                    content[i] = line[:self.width-3] + '-'
+                    content.insert(i+1, line[self.width-3:])
+                else:
+                    content[i] = line[:self.width-2]
+                    content.insert(i+1, line[self.width-2:])
 
         if(len(content[0]) > 0):
             self.content = content
