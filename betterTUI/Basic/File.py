@@ -1,5 +1,4 @@
 import curses
-
 from betterTUI.Screen import Screen
 from tkinter import filedialog
 
