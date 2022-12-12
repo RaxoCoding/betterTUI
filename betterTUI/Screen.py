@@ -40,9 +40,6 @@ class Screen:
 
                 self.COLOR_GREEN_REVERSE = 7
 
-            else:
-                curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE) # 2: Yellow on Green
-
         try:
             func(self)
         finally:

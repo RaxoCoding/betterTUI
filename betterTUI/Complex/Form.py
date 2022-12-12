@@ -14,7 +14,7 @@ class Form:
         self.content = {}
         self.pos = 0
         self.parent = None
-        self.color
+        self.color = color
 
         for k, v in extra_data.items():
             self.content[k] = v
