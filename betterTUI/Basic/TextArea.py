@@ -13,7 +13,7 @@ class TextArea:
         self.controlStartPos = [0, 0]
         self.controlPos = 0
         self.controlMatches = []
-        self.controlCommands = commands 
+        self.controlCommands = commands
         self.color = color
 
         for i, line in enumerate(content):
@@ -248,7 +248,7 @@ class TextArea:
                self.content[self.controlStartPos[1]] = line[0:self.controlStartPos[0]] + line[self.controlStartPos[0]+1+len(line[self.controlStartPos[0]+1:].split(" ")[0]):] 
 
 
-               for line in value:
+               for line in value[::-1]:
                    self.content.insert(self.controlStartPos[1], line)
 
                self.control = False

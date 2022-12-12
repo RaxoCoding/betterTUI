@@ -20,23 +20,23 @@ class Form:
             self.content[k] = v
 
         padding = 0
-        for input in inputs.values():
-            if(hasattr(input, "on")):
-                input.parent = self
-                input.move(x, y+padding)
+        for i in inputs.values():
+            if(hasattr(i, "on")):
+                i.parent = self
+                i.move(x, y+padding)
 
-                padding += input.height + 1
+                padding += i.height + 1
             else:
                 raise Exception("Form: inputs must have an 'on' method")
 
         padding = 0
 
-        for input in inputs.values():
-            if(hasattr(input, "on")):
-                input.parent = self
-                input.move(x, y+padding)
+        for i in inputs.values():
+            if(hasattr(i, "on")):
+                i.parent = self
+                i.move(x, y+padding)
 
-                padding += input.height + 1
+                padding += i.height + 1
             else:
                 raise Exception("Form: inputs must have an 'on' method")
 

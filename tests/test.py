@@ -3,7 +3,7 @@
 from betterTUI import *
 
 def home(screen, child_obj=None):
-    text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:", color=screen.COLOR_GREEN, commands={"table": ["Header 1 | Header 2", "Data 1 | Data 2"], "li": ["*"], "h1": ["**"]}, content=["ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"]), vault)
+    text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:", commands={"table": ["Header 1 | Header 2", "Data 1 | Data 2"], "li": ["*"], "h1": ["**"]}, content=["ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"]), vault)
 
     # text_area[0].move(10, 10)
     button = (Button(screen, 14, 20, "ENTER VAULT", color=screen.COLOR_BLUE), vault)
