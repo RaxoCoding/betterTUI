@@ -17,7 +17,7 @@ class TextArea:
         self.color = color
 
         for i, line in enumerate(content):
-            if(len(line) > self.width-4):
+            if(len(line) > self.width-4 and not (len(line)==self.width-2 and line[-1] == '-')):
                 if not(line[self.width-3] == '-'):
                     content[i] = line[:self.width-3] + '-'
                     content.insert(i+1, line[self.width-3:])
