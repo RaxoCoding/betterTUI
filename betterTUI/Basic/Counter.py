@@ -32,7 +32,7 @@ class Counter:
         if(len(args) == 0):
             args = ["\n", "KEY_ENTER"]
 
-        self.addstr(self.y+1, self.x, self.label, curses.A_REVERSE)
+        self.addstr(self.y+1, self.x, self.label, True)
 
         while(True):
 
@@ -71,13 +71,13 @@ class Counter:
 
             match self.pos:
                 case 0:
-                    self.addstr(self.y+1, self.x, self.label, curses.A_REVERSE)
+                    self.addstr(self.y+1, self.x, self.label, True)
 
                 case 1:
-                    self.addstr(self.y, self.x+len(self.label)+int(len(self.content)/2), "▲", curses.A_REVERSE)
+                    self.addstr(self.y, self.x+len(self.label)+int(len(self.content)/2), "▲", True)
 
                 case -1:
-                    self.addstr(self.y+2, self.x+len(self.label)+int(len(self.content)/2), "▼", curses.A_REVERSE)
+                    self.addstr(self.y+2, self.x+len(self.label)+int(len(self.content)/2), "▼", True)
 
             self.addstr(self.y+1, self.x+len(self.label), self.content)
             self.screen.refresh()

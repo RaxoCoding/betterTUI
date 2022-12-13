@@ -37,7 +37,7 @@ class Button:
         if(len(args) == 0):
             args =  ["\n", "KEY_ENTER"]
             
-        self.addstr(self.y+1, self.x+1, self.label, curses.A_REVERSE)
+        self.addstr(self.y+1, self.x+1, self.label, True)
 
         while(True):
             key_str = self.screen.getkey()

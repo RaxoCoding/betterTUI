@@ -5,10 +5,12 @@ from betterTUI import *
 def home(screen, child_obj=None):
     text_area = (TextArea(screen, 2, 1, 60, 15, "Text Area:", commands={"table": ["Header 1 | Header 2", "Data 1 | Data 2"], "li": ["*"], "h1": ["**"]}, content=["ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDE-", "FGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ", "", "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"]), vault)
 
+    select = (Select(screen=screen, x=2, y=20, label="select", options=["1", "2"]), vault)
+
     # text_area[0].move(10, 10)
     button = (Button(screen, 14, 20, "ENTER VAULT", color=screen.COLOR_BLUE), vault)
 
-    return [[text_area], [button]]
+    return [[text_area], [select], [button]]
 
 def vault(screen, child_obj):
 

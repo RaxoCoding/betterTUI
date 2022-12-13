@@ -29,7 +29,7 @@ class File:
         if(len(args) == 0):
             args = ["\n", "KEY_ENTER"]
 
-        self.addstr(self.y, self.x, self.label, curses.A_REVERSE)
+        self.addstr(self.y, self.x, self.label, True)
 
         while(True):
 
@@ -58,7 +58,7 @@ class File:
             else:
                 self.handle_key(key_str)
 
-            self.addstr(self.y, self.x, self.label, curses.A_REVERSE)
+            self.addstr(self.y, self.x, self.label, True)
             if self.pos == 1:
                     filename = filedialog.askopenfilename()
                     self.content = filename

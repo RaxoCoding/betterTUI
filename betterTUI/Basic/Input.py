@@ -50,7 +50,7 @@ class Input:
         if(len(args) == 0):
             args = ["\n", "KEY_ENTER"]
 
-        self.addstr(self.y, self.x, self.label, curses.A_REVERSE)
+        self.addstr(self.y, self.x, self.label, True)
         self.screen.move(self.y+2, self.x+2+self.pos)
         curses.curs_set(1)
         self.show_content_pos = len(self.content)-1

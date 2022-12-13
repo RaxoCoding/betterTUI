@@ -76,7 +76,7 @@ class Select:
                 except:
                     pass
 
-                self.addstr(self.y, self.x, self.label, curses.A_REVERSE)
+                self.addstr(self.y, self.x, self.label, True)
                 self.addstr(self.y, self.x+len(self.label), self.content)
             else:
                 self.addstr(self.y, self.x+len(self.label), " "*len(self.content))
@@ -85,7 +85,7 @@ class Select:
 
                 for i, option in enumerate(self.options):
                     if(i == self.pos-1):
-                        self.texts.append(Text(self.screen, self.x+len(self.label)+1, self.y+i+1, str(option), curses.A_REVERSE))
+                        self.texts.append(Text(self.screen, self.x+len(self.label)+1, self.y+i+1, str(option), True))
                     else:
                         self.texts.append(Text(self.screen, self.x+len(self.label)+1, self.y+i+1, str(option)))
 

@@ -26,7 +26,7 @@ class SlimButton:
         if(len(args) == 0):
             args =  ["\n", "KEY_ENTER"]
             
-        self.addstr(self.y, self.x, self.label, curses.A_REVERSE)
+        self.addstr(self.y, self.x, self.label, True)
 
         while(True):
             key_str = self.screen.getkey()
