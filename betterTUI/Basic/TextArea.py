@@ -67,6 +67,7 @@ class TextArea:
         self.screen.attroff(curses.color_pair(self.color+i))
 
     def on(self, *args) -> int:
+        self.control = False
 
         self.addstr(self.y, self.x, self.label, True)
         
